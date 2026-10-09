@@ -1,6 +1,6 @@
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
 
-import { orderCountByStore } from "@/pages/home/model/order-data";
+import { orderCountByStore } from "../model/order/order";
 import {
 	Card,
 	CardContent,

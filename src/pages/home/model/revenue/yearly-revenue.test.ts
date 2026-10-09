@@ -4,7 +4,7 @@ vi.mock("@/shared/config", () => ({
 	CURRENT_YEAR: 2024,
 }));
 
-import { getTotalMoneyForOneYear } from "./total-money-for-one-year";
+import { getTotalMoneyForOneYear } from "./yearly-revenue";
 
 const fakeOrders = [
 	{

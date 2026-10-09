@@ -1,5 +1,5 @@
 import { isCurrentYear } from "@/shared/lib/is-current-year";
-import rawReviewData from "./review_data.json";
+import rawReviewData from "./review-data.json";
 
 type StoreType = "Kanata" | "Orleans" | "Downtown" | "Sandy Hill" | "The Glebe";
 type ReviewData = {
@@ -19,7 +19,6 @@ type ObjectSentimentCount = Record<
 >;
 
 const reviewData = rawReviewData as ReviewData[];
-
 export const reviewsBySentimentThisYear =
 	countReviewsBySentimentThisYear(reviewData);
 

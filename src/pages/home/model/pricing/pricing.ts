@@ -1,5 +1,5 @@
-import type { PizzaType } from "./order-data";
-import pricingData from "./pricing_data.json";
+import type { PizzaType } from "../order/order";
+import pricingData from "./pricing-data.json";
 
 export type PizzaSize = "S" | "M" | "L";
 type PricingDataType = Record<PizzaType, Record<PizzaSize, number>>;

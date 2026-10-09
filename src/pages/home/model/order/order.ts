@@ -1,6 +1,6 @@
 import slugify from "@sindresorhus/slugify";
-import orderData from "@/pages/home/model/order_data.json";
-import type { PizzaSize } from "@/pages/home/model/pricing-data";
+import type { PizzaSize } from "../pricing/pricing";
+import orderData from "./order-data.json";
 
 export type StoreType =
 	| "Kanata"

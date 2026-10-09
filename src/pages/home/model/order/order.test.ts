@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { countOrdersByStore } from "./order-data";
+import { countOrdersByStore } from "./order";
 
 const fakeOrders = [
 	{

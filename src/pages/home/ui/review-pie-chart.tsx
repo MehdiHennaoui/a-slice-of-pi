@@ -1,6 +1,6 @@
 import { LabelList, Pie, PieChart } from "recharts";
 
-import { reviewsBySentimentThisYear } from "@/pages/home/model/review-data";
+import { reviewsBySentimentThisYear } from "../model/review/review";
 import {
 	Card,
 	CardContent,

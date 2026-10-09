@@ -4,7 +4,7 @@ vi.mock("@/shared/config", () => ({
 	CURRENT_YEAR: 2024,
 }));
 
-import { countReviewsBySentimentThisYear } from "./review-data";
+import { countReviewsBySentimentThisYear } from "./review";
 
 const fakeReviews = [
 	{

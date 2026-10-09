@@ -1,8 +1,8 @@
-import type { OrderDataType } from "@/pages/home/model/order-data";
-import { orderDataArray } from "@/pages/home/model/order-data";
-import { getPizzaPrice } from "@/pages/home/model/pricing-data";
 import { CURRENT_YEAR } from "@/shared/config";
 import { isCurrentYear } from "@/shared/lib/is-current-year";
+import type { OrderDataType } from "../order/order";
+import { orderDataArray } from "../order/order";
+import { getPizzaPrice } from "../pricing/pricing";
 
 export const totalMoneyForOneYear = getTotalMoneyForOneYear(
 	orderDataArray,

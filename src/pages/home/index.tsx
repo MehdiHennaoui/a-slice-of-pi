@@ -1,6 +1,6 @@
-import { OrderByStoreBarChart } from "@/pages/home/ui/order-by-store-bar-chart";
-import { ReviewPieChart } from "@/pages/home/ui/review-pie-chart";
-import { YearlyRevenue } from "@/pages/home/ui/yearly-revenue";
+import { OrderByStoreBarChart } from "./ui/order-by-store-bar-chart";
+import { ReviewPieChart } from "./ui/review-pie-chart";
+import { YearlyRevenue } from "./ui/yearly-revenue";
 
 export const HomePage = () => {
 	return (

@@ -1,4 +1,4 @@
-import { totalMoneyForOneYear } from "@/pages/home/model/total-money-for-one-year";
+import { totalMoneyForOneYear } from "../model/revenue/yearly-revenue";
 import {
 	Card,
 	CardContent,
