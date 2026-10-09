@@ -1,3 +1,5 @@
+import slugify from "@sindresorhus/slugify";
+
 import orderData from "./order_data.json";
 
 type StoreType = "Kanata" | "Orleans" | "Downtown" | "Sandy Hill" | "The Glebe";
@@ -23,18 +25,23 @@ type OrderCountByStoreType = Record<
 	{
 		order_count: number;
 		fill: string;
+		store: string;
 	}
 >;
 
 const orderDataArray = orderData as OrderDataType[];
+export const orderCountByStore = countOrdersByStore(orderDataArray);
 
-export const orderCountByStore = orderDataArray.reduce(
-	(acc, order: OrderDataType) => {
-		acc[order.store] = {
-			order_count: (acc[order.store]?.order_count || 0) + 1,
-			fill: `var(--color-store-${order.store})`,
-		};
-		return acc;
-	},
-	{} as OrderCountByStoreType,
-);
+export function countOrdersByStore(orderDataArray: OrderDataType[]) {
+	return Object.values(
+		orderDataArray.reduce((acc, order: OrderDataType) => {
+			const storeSlug = slugify(order.store);
+			acc[order.store] = {
+				store: storeSlug,
+				order_count: (acc[order.store]?.order_count || 0) + 1,
+				fill: `var(--color-${storeSlug})`,
+			};
+			return acc;
+		}, {} as OrderCountByStoreType),
+	);
+}
