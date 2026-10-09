@@ -1,9 +1,14 @@
 import slugify from "@sindresorhus/slugify";
+import orderData from "@/pages/home/model/order_data.json";
+import type { PizzaSize } from "@/pages/home/model/pricing-data";
 
-import orderData from "./order_data.json";
-
-type StoreType = "Kanata" | "Orleans" | "Downtown" | "Sandy Hill" | "The Glebe";
-type PizzaType =
+export type StoreType =
+	| "Kanata"
+	| "Orleans"
+	| "Downtown"
+	| "Sandy Hill"
+	| "The Glebe";
+export type PizzaType =
 	| "Cheese"
 	| "Pepperoni"
 	| "Deluxe"
@@ -11,12 +16,12 @@ type PizzaType =
 	| "Hawaiian"
 	| "Margherita";
 
-type OrderDataType = {
+export type OrderDataType = {
 	order_id: number;
 	store: StoreType;
 	items: {
 		type: PizzaType;
-		size: string;
+		size: PizzaSize;
 	}[];
 	date: string;
 };
@@ -29,7 +34,7 @@ type OrderCountByStoreType = Record<
 	}
 >;
 
-const orderDataArray = orderData as OrderDataType[];
+export const orderDataArray = orderData as OrderDataType[];
 export const orderCountByStore = countOrdersByStore(orderDataArray);
 
 export function countOrdersByStore(orderDataArray: OrderDataType[]) {

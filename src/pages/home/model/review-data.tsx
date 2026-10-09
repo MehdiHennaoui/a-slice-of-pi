@@ -1,4 +1,4 @@
-import { CURRENT_YEAR } from "@/shared/config";
+import { isCurrentYear } from "@/shared/lib/is-current-year";
 import rawReviewData from "./review_data.json";
 
 type StoreType = "Kanata" | "Orleans" | "Downtown" | "Sandy Hill" | "The Glebe";
@@ -49,5 +49,5 @@ function accumulateCurrentYearSentimentCount(
 }
 
 function isReviewNotInCurrentYear(review: ReviewData) {
-	return new Date(review.date).getFullYear() !== CURRENT_YEAR;
+	return !isCurrentYear(review.date);
 }
