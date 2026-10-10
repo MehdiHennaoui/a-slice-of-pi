@@ -7,6 +7,7 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
+import { Button } from "@/shared/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -62,7 +63,6 @@ const chartConfig: ChartConfig = {
 		color: "var(--chart-5)",
 	},
 };
-
 const PIZZA_FILTER_OPTIONS = ["all", ...PIZZA_TYPES] as const;
 const PIZZA_SIZE_FILTER_OPTIONS = ["all", ...PIZZA_SIZES] as const;
 
@@ -81,6 +81,11 @@ export function OrderByStoreBarChart() {
 			),
 		);
 	}, [pizzaSelected, pizzaSizeSelected]);
+
+	const handleResetFilters = () => {
+		setPizzaSelected("all");
+		setPizzaSizeSelected("all");
+	};
 
 	return (
 		<section>
@@ -105,6 +110,7 @@ export function OrderByStoreBarChart() {
 								placeholder="Select a pizza size"
 								onValueChange={setPizzaSizeSelected}
 							/>
+							<Button onClick={handleResetFilters}>Reset Filters</Button>
 						</FieldGroup>
 					</CardDescription>
 				</CardHeader>
