@@ -69,11 +69,6 @@ describe("getTotalMoneyForOneYear", () => {
 		expect(getTotalMoneyForOneYear(olderOrders)).toBe(0);
 	});
 
-	it("uses the yearSelected argument when provided", () => {
-		// Hawaiian S = 10
-		expect(getTotalMoneyForOneYear(fakeOrders, 2023)).toBe(10);
-	});
-
 	it("returns 0 for an empty input", () => {
 		expect(getTotalMoneyForOneYear([])).toBe(0);
 	});

@@ -1,4 +1,3 @@
-import { totalMoneyForOneYear } from "../model/revenue/yearly-revenue";
 import {
 	Card,
 	CardContent,
@@ -6,6 +5,7 @@ import {
 	CardTitle,
 } from "@/shared/components/ui/card";
 import { CURRENT_YEAR } from "@/shared/config";
+import { totalMoneyForOneYear } from "../model/revenue/yearly-revenue";
 
 export function YearlyRevenue() {
 	return (

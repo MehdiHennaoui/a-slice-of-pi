@@ -1,4 +1,5 @@
 import { CURRENT_YEAR } from "@/shared/config";
+import { isValidDate } from "./date";
 
 export function isCurrentYear(date: string, selectedYear = CURRENT_YEAR) {
 	const parsedDate = new Date(date);
@@ -9,8 +10,4 @@ export function isCurrentYear(date: string, selectedYear = CURRENT_YEAR) {
 	}
 
 	return parsedDate.getFullYear() === selectedYear;
-}
-
-function isValidDate(date: string) {
-	return !Number.isNaN(new Date(date).getTime());
 }
