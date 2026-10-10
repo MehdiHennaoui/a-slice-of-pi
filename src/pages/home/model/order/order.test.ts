@@ -30,7 +30,7 @@ const fakeOrders = [
 	{
 		order_id: 5,
 		store: "Sandy Hill",
-		items: [{ type: "Margherita", size: "L" }],
+		items: [{ type: "Meatlovers", size: "L" }],
 		date: "2023-05-20",
 	},
 ] as Parameters<typeof countOrdersByStore>[0];

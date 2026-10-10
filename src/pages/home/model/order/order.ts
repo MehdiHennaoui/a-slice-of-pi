@@ -8,7 +8,6 @@ export const PIZZA_TYPES = [
 	"Deluxe",
 	"Meatlovers",
 	"Hawaiian",
-	"Margherita",
 ] as const;
 export type StoreType =
 	| "Kanata"
