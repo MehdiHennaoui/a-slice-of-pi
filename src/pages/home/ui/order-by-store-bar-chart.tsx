@@ -1,9 +1,16 @@
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
-
-import { orderCountByStore } from "../model/order/order";
+import { useMemo, useState } from "react";
+import {
+	Bar,
+	BarChart,
+	CartesianGrid,
+	LabelList,
+	XAxis,
+	YAxis,
+} from "recharts";
 import {
 	Card,
 	CardContent,
+	CardDescription,
 	CardHeader,
 	CardTitle,
 } from "@/shared/components/ui/card";
@@ -13,6 +20,22 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/shared/components/ui/chart";
+import { Field, FieldGroup, FieldLabel } from "@/shared/components/ui/field";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/shared/components/ui/select";
+import {
+	countOrdersByStore,
+	filterOrdersByPizzaTypeOrSize,
+	orderDataArray,
+	PIZZA_TYPES,
+	type PizzaType,
+} from "../model/order/order";
+import { PIZZA_SIZES, type PizzaSize } from "../model/pricing/pricing";
 
 const chartConfig: ChartConfig = {
 	order_count: {
@@ -40,7 +63,25 @@ const chartConfig: ChartConfig = {
 	},
 };
 
+const PIZZA_FILTER_OPTIONS = ["all", ...PIZZA_TYPES] as const;
+const PIZZA_SIZE_FILTER_OPTIONS = ["all", ...PIZZA_SIZES] as const;
+
 export function OrderByStoreBarChart() {
+	const [pizzaSelected, setPizzaSelected] = useState<PizzaType | "all">("all");
+	const [pizzaSizeSelected, setPizzaSizeSelected] = useState<PizzaSize | "all">(
+		"all",
+	);
+
+	const orderCountByStore = useMemo(() => {
+		return countOrdersByStore(
+			filterOrdersByPizzaTypeOrSize(
+				orderDataArray,
+				pizzaSelected,
+				pizzaSizeSelected,
+			),
+		);
+	}, [pizzaSelected, pizzaSizeSelected]);
+
 	return (
 		<section>
 			<Card>
@@ -48,6 +89,24 @@ export function OrderByStoreBarChart() {
 					<CardTitle>
 						<h1>Order by Store</h1>
 					</CardTitle>
+					<CardDescription>
+						<FieldGroup>
+							<SelectFilter
+								label="Filter by Pizza"
+								value={pizzaSelected}
+								options={PIZZA_FILTER_OPTIONS}
+								placeholder="Select a pizza"
+								onValueChange={setPizzaSelected}
+							/>
+							<SelectFilter
+								label="Filter by Pizza Size"
+								value={pizzaSizeSelected}
+								options={PIZZA_SIZE_FILTER_OPTIONS}
+								placeholder="Select a pizza size"
+								onValueChange={setPizzaSizeSelected}
+							/>
+						</FieldGroup>
+					</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<ChartContainer config={chartConfig}>
@@ -78,5 +137,45 @@ export function OrderByStoreBarChart() {
 				</CardContent>
 			</Card>
 		</section>
+	);
+}
+
+type SelectFilterOption = string;
+type SelectFilterProps<T extends SelectFilterOption> = {
+	label: string;
+	value: T;
+	options: readonly T[];
+	placeholder: string;
+	onValueChange: (value: T) => void;
+};
+
+function SelectFilter<T extends SelectFilterOption>({
+	label,
+	value,
+	options,
+	placeholder,
+	onValueChange,
+}: SelectFilterProps<T>) {
+	return (
+		<Field>
+			<FieldLabel>
+				{label} {value}
+			</FieldLabel>
+			<Select
+				value={value}
+				onValueChange={(nextValue) => onValueChange(nextValue as T)}
+			>
+				<SelectTrigger>
+					<SelectValue placeholder={placeholder} />
+				</SelectTrigger>
+				<SelectContent>
+					{options.map((option) => (
+						<SelectItem key={option} value={option}>
+							{option}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</Select>
+		</Field>
 	);
 }

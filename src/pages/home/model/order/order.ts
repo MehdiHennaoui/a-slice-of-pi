@@ -2,20 +2,21 @@ import slugify from "@sindresorhus/slugify";
 import type { PizzaSize } from "../pricing/pricing";
 import orderData from "./order-data.json";
 
+export const PIZZA_TYPES = [
+	"Cheese",
+	"Pepperoni",
+	"Deluxe",
+	"Meatlovers",
+	"Hawaiian",
+	"Margherita",
+] as const;
 export type StoreType =
 	| "Kanata"
 	| "Orleans"
 	| "Downtown"
 	| "Sandy Hill"
 	| "The Glebe";
-export type PizzaType =
-	| "Cheese"
-	| "Pepperoni"
-	| "Deluxe"
-	| "Meatlovers"
-	| "Hawaiian"
-	| "Margherita";
-
+export type PizzaType = (typeof PIZZA_TYPES)[number];
 export type OrderDataType = {
 	order_id: number;
 	store: StoreType;
@@ -35,7 +36,6 @@ type OrderCountByStoreType = Record<
 >;
 
 export const orderDataArray = orderData as OrderDataType[];
-export const orderCountByStore = countOrdersByStore(orderDataArray);
 
 export function countOrdersByStore(orderDataArray: OrderDataType[]) {
 	return Object.values(
@@ -48,5 +48,33 @@ export function countOrdersByStore(orderDataArray: OrderDataType[]) {
 			};
 			return acc;
 		}, {} as OrderCountByStoreType),
+	);
+}
+
+export function filterOrdersByPizzaTypeOrSize(
+	orderDataArray: OrderDataType[],
+	pizzaType: PizzaType | "all",
+	pizzaSize: PizzaSize | "all",
+) {
+	if (pizzaType === "all" && pizzaSize === "all") {
+		return orderDataArray;
+	}
+
+	if (pizzaType === "all") {
+		return orderDataArray.filter((order) =>
+			order.items.some((item) => item.size === pizzaSize),
+		);
+	}
+
+	if (pizzaSize === "all") {
+		return orderDataArray.filter((order) =>
+			order.items.some((item) => item.type === pizzaType),
+		);
+	}
+
+	return orderDataArray.filter((order) =>
+		order.items.some(
+			(item) => item.type === pizzaType && item.size === pizzaSize,
+		),
 	);
 }
