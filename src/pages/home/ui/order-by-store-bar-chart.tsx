@@ -109,31 +109,35 @@ export function OrderByStoreBarChart() {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<ChartContainer config={chartConfig}>
-						<BarChart data={orderCountByStore}>
-							<CartesianGrid vertical={false} />
-							<ChartTooltip
-								content={<ChartTooltipContent labelKey="store" />}
-							/>
-							<Bar dataKey="order_count">
-								<LabelList
-									dataKey="order_count"
-									position="top"
-									className="fill-foreground text-sm"
+					{orderCountByStore.length > 0 ? (
+						<ChartContainer config={chartConfig}>
+							<BarChart data={orderCountByStore}>
+								<CartesianGrid vertical={false} />
+								<ChartTooltip
+									content={<ChartTooltipContent labelKey="store" />}
 								/>
-							</Bar>
-							<XAxis
-								dataKey="store"
-								tickFormatter={(value) =>
-									String(
-										chartConfig[value as keyof typeof chartConfig]?.label ??
-											value,
-									)
-								}
-							/>
-							<YAxis dataKey="order_count" />
-						</BarChart>
-					</ChartContainer>
+								<Bar dataKey="order_count">
+									<LabelList
+										dataKey="order_count"
+										position="top"
+										className="fill-foreground text-sm"
+									/>
+								</Bar>
+								<XAxis
+									dataKey="store"
+									tickFormatter={(value) =>
+										String(
+											chartConfig[value as keyof typeof chartConfig]?.label ??
+												value,
+										)
+									}
+								/>
+								<YAxis dataKey="order_count" />
+							</BarChart>
+						</ChartContainer>
+					) : (
+						<div>No orders found for the selected filters</div>
+					)}
 				</CardContent>
 			</Card>
 		</section>
