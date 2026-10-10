@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { countOrdersByStore } from "./order";
+import { countOrdersByStore, filterOrdersByPizzaTypeOrSize } from "./order";
 
 const fakeOrders = [
 	{
@@ -66,5 +66,69 @@ describe("countOrdersByStore", () => {
 
 	it("returns an empty array for an empty input", () => {
 		expect(countOrdersByStore([])).toEqual([]);
+	});
+});
+
+const filterOrders = [
+	{
+		order_id: 1,
+		store: "Kanata",
+		items: [
+			{ type: "Cheese", size: "S" },
+			{ type: "Pepperoni", size: "L" },
+		],
+		date: "2023-01-05",
+	},
+	{
+		order_id: 2,
+		store: "Orleans",
+		items: [{ type: "Deluxe", size: "L" }],
+		date: "2023-02-14",
+	},
+	{
+		order_id: 3,
+		store: "Downtown",
+		items: [{ type: "Cheese", size: "M" }],
+		date: "2023-03-01",
+	},
+] as Parameters<typeof filterOrdersByPizzaTypeOrSize>[0];
+
+describe("filterOrdersByPizzaTypeOrSize", () => {
+	it("returns every order when type and size are all", () => {
+		expect(filterOrdersByPizzaTypeOrSize(filterOrders, "all", "all")).toEqual(
+			filterOrders,
+		);
+	});
+
+	it("keeps orders that contain the selected size", () => {
+		const result = filterOrdersByPizzaTypeOrSize(filterOrders, "all", "L");
+
+		expect(result.map((order) => order.order_id)).toEqual([1, 2]);
+	});
+
+	it("keeps orders that contain the selected type", () => {
+		const result = filterOrdersByPizzaTypeOrSize(filterOrders, "Cheese", "all");
+
+		expect(result.map((order) => order.order_id)).toEqual([1, 3]);
+	});
+
+	it("keeps an order only when one item matches both type and size", () => {
+		const matching = filterOrdersByPizzaTypeOrSize(
+			filterOrders,
+			"Cheese",
+			"S",
+		);
+		const splitAcrossItems = filterOrdersByPizzaTypeOrSize(
+			filterOrders,
+			"Pepperoni",
+			"S",
+		);
+
+		expect(matching.map((order) => order.order_id)).toEqual([1]);
+		expect(splitAcrossItems).toEqual([]);
+	});
+
+	it("returns an empty array for an empty input", () => {
+		expect(filterOrdersByPizzaTypeOrSize([], "Cheese", "S")).toEqual([]);
 	});
 });
