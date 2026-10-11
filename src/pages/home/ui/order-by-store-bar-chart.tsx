@@ -1,5 +1,11 @@
-import { StoreIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import {
+	ListFilterIcon,
+	PizzaIcon,
+	RotateCcwIcon,
+	ScalingIcon,
+	StoreIcon,
+} from "lucide-react";
+import { type ReactNode, useMemo, useState } from "react";
 import {
 	Bar,
 	BarChart,
@@ -12,7 +18,6 @@ import { Button } from "@/shared/components/ui/button";
 import {
 	Card,
 	CardContent,
-	CardDescription,
 	CardHeader,
 	CardTitle,
 } from "@/shared/components/ui/card";
@@ -84,6 +89,9 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 		);
 	}, [pizzaSelected, pizzaSizeSelected]);
 
+	const hasActiveFilters =
+		pizzaSelected !== "all" || pizzaSizeSelected !== "all";
+
 	const handleResetFilters = () => {
 		setPizzaSelected("all");
 		setPizzaSizeSelected("all");
@@ -92,29 +100,47 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 	return (
 		<section className={className}>
 			<Card>
-				<CardHeader>
+				<CardHeader className="gap-4 border-b pb-(--card-spacing)">
 					<CardTitle>
 						<StoreIcon /> <h1>Order by Store for {CURRENT_YEAR}</h1>
 					</CardTitle>
-					<CardDescription>
-						<FieldGroup>
+					<div className="rounded-xl border border-border/70 bg-muted/35 p-3">
+						<h2 className="mb-3 flex items-center gap-1.5 font-medium text-foreground text-sm">
+							<ListFilterIcon className="size-3.5 text-muted-foreground" />
+							Filters
+						</h2>
+						<FieldGroup className="gap-3 sm:flex-row sm:items-end">
 							<SelectFilter
-								label="Filter by Pizza"
+								label="Pizza"
+								icon={<PizzaIcon className="size-3.5 text-muted-foreground" />}
 								value={pizzaSelected}
 								options={PIZZA_FILTER_OPTIONS}
-								placeholder="Select a pizza"
+								placeholder="for example: Margherita"
 								onValueChange={setPizzaSelected}
+								className="min-w-0 flex-1"
 							/>
 							<SelectFilter
-								label="Filter by Pizza Size"
+								label="Size"
+								icon={
+									<ScalingIcon className="size-3.5 text-muted-foreground" />
+								}
 								value={pizzaSizeSelected}
 								options={PIZZA_SIZE_FILTER_OPTIONS}
-								placeholder="Select a pizza size"
+								placeholder="for example: S"
 								onValueChange={setPizzaSizeSelected}
+								className="min-w-0 flex-1"
 							/>
-							<Button onClick={handleResetFilters}>Reset Filters</Button>
+							<Button
+								variant="outline"
+								className="w-full shrink-0 bg-card sm:w-auto"
+								disabled={!hasActiveFilters}
+								onClick={handleResetFilters}
+							>
+								<RotateCcwIcon data-icon="inline-start" />
+								Reset filters
+							</Button>
 						</FieldGroup>
-					</CardDescription>
+					</div>
 				</CardHeader>
 				<CardContent>
 					{orderCountByStore.length > 0 ? (
@@ -148,7 +174,9 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 							</BarChart>
 						</ChartContainer>
 					) : (
-						<div>No orders found for the selected filters</div>
+						<div className="flex min-h-40 items-center justify-center rounded-lg border border-border/80 border-dashed bg-muted/20 px-4 text-center text-muted-foreground text-sm">
+							No orders found for the selected filters
+						</div>
 					)}
 				</CardContent>
 			</Card>
@@ -159,35 +187,51 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 type SelectFilterOption = string;
 type SelectFilterProps<T extends SelectFilterOption> = {
 	label: string;
+	icon?: ReactNode;
 	value: T;
 	options: readonly T[];
 	placeholder: string;
 	onValueChange: (value: T) => void;
+	className?: string;
 };
+
+const SIZE_LABELS: Record<string, string> = {
+	all: "All",
+	S: "Small",
+	M: "Medium",
+	L: "Large",
+};
+
+function formatFilterOption(option: string) {
+	return SIZE_LABELS[option] ?? option;
+}
 
 function SelectFilter<T extends SelectFilterOption>({
 	label,
+	icon,
 	value,
 	options,
 	placeholder,
 	onValueChange,
+	className,
 }: SelectFilterProps<T>) {
 	return (
-		<Field>
-			<FieldLabel>
-				{label} {value}
+		<Field className={className}>
+			<FieldLabel className="items-center font-medium text-foreground text-xs tracking-[0.08em]">
+				{icon}
+				{label}
 			</FieldLabel>
 			<Select
 				value={value}
 				onValueChange={(nextValue) => onValueChange(nextValue as T)}
 			>
-				<SelectTrigger>
+				<SelectTrigger className="w-full bg-card">
 					<SelectValue placeholder={placeholder} />
 				</SelectTrigger>
 				<SelectContent>
 					{options.map((option) => (
 						<SelectItem key={option} value={option}>
-							{option}
+							{formatFilterOption(option)}
 						</SelectItem>
 					))}
 				</SelectContent>
