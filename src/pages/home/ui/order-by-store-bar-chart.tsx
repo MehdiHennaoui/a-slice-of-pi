@@ -3,7 +3,7 @@ import {
 	ListFilterIcon,
 	PizzaIcon,
 	RotateCcwIcon,
-	ScalingIcon,
+	RulerDimensionLineIcon,
 	StoreIcon,
 } from "lucide-react";
 import { type ReactNode, useMemo, useState } from "react";
@@ -102,91 +102,97 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 	return (
 		<section className={className}>
 			<Card className="flex h-full flex-col">
-				<CardHeader className="shrink-0 gap-4">
+				<CardHeader className="shrink-0">
 					<CardTitle>
 						<StoreIcon /> <h1>Order by Store for {CURRENT_YEAR}</h1>
 					</CardTitle>
-					<div className="rounded-xl border border-border/70 bg-muted/35 p-3">
-						<h2 className="mb-3 flex items-center gap-1.5 font-medium text-foreground text-sm">
-							<ListFilterIcon className="size-3.5 text-muted-foreground" />
-							Filters
-						</h2>
-						<FieldGroup className="gap-3 sm:flex-row sm:items-end">
-							<SelectFilter
-								label="Pizza"
-								icon={<PizzaIcon className="size-3.5 text-muted-foreground" />}
-								value={pizzaSelected}
-								options={PIZZA_FILTER_OPTIONS}
-								placeholder="for example: Margherita"
-								onValueChange={setPizzaSelected}
-								className="min-w-0 flex-1"
-							/>
-							<SelectFilter
-								label="Size"
-								icon={
-									<ScalingIcon className="size-3.5 text-muted-foreground" />
-								}
-								value={pizzaSizeSelected}
-								options={PIZZA_SIZE_FILTER_OPTIONS}
-								placeholder="for example: S"
-								onValueChange={setPizzaSizeSelected}
-								className="min-w-0 flex-1"
-							/>
-							<Button
-								variant="outline"
-								className="w-full shrink-0 bg-card sm:w-auto"
-								disabled={!hasActiveFilters}
-								onClick={handleResetFilters}
-							>
-								<RotateCcwIcon data-icon="inline-start" />
-								Reset filters
-							</Button>
-						</FieldGroup>
-					</div>
 				</CardHeader>
-				<CardContent className="flex min-h-0 flex-1 flex-col">
-					{orderCountByStore.length > 0 ? (
-						<ChartContainer
-							config={chartConfig}
-							className="aspect-auto! h-full w-full"
-						>
-							<BarChart
-								accessibilityLayer
-								data={orderCountByStore}
-								margin={{ top: tailwindSpacingToPx(6) }}
-							>
-								<CartesianGrid vertical={false} />
-								<ChartTooltip
-									content={<ChartTooltipContent labelKey="store" />}
-								/>
-								<Bar
-									dataKey="order_count"
-									fill="var(--chart-1)"
-									radius={[6, 6, 0, 0]}
-								>
-									<LabelList
-										dataKey="order_count"
-										position="top"
-										className="fill-foreground text-sm"
-									/>
-								</Bar>
-								<XAxis
-									dataKey="store"
-									tickFormatter={(value) =>
-										String(
-											chartConfig[value as keyof typeof chartConfig]?.label ??
-												value,
-										)
+				<CardContent className="flex min-h-0 flex-1 flex-col gap-2 lg:flex-row">
+					<aside className="w-full shrink-0 lg:w-40">
+						<div className="rounded-xl border border-border/70 bg-muted/35 p-3">
+							<h2 className="mb-3 flex items-center gap-1.5 font-medium text-foreground text-sm">
+								<ListFilterIcon className="size-3.5 text-muted-foreground" />
+								Filters
+							</h2>
+							<FieldGroup className="gap-3">
+								<SelectFilter
+									label="Pizza"
+									icon={
+										<PizzaIcon className="size-3.5 text-muted-foreground" />
 									}
+									value={pizzaSelected}
+									options={PIZZA_FILTER_OPTIONS}
+									placeholder="for example: Margherita"
+									onValueChange={setPizzaSelected}
+									className="w-full"
 								/>
-								<YAxis dataKey="order_count" />
-							</BarChart>
-						</ChartContainer>
-					) : (
-						<div className="flex h-full min-h-40 items-center justify-center rounded-lg border border-border/80 border-dashed bg-muted/20 px-4 text-center text-muted-foreground text-sm">
-							No orders found for the selected filters
+								<SelectFilter
+									label="Size"
+									icon={
+										<RulerDimensionLineIcon className="size-3.5 text-muted-foreground" />
+									}
+									value={pizzaSizeSelected}
+									options={PIZZA_SIZE_FILTER_OPTIONS}
+									placeholder="for example: S"
+									onValueChange={setPizzaSizeSelected}
+									className="w-full"
+								/>
+								<Button
+									variant="outline"
+									className="w-full shrink-0 bg-card"
+									disabled={!hasActiveFilters}
+									onClick={handleResetFilters}
+								>
+									<RotateCcwIcon data-icon="inline-start" />
+									Reset filters
+								</Button>
+							</FieldGroup>
 						</div>
-					)}
+					</aside>
+					<div className="flex min-h-0 min-w-0 flex-1 flex-col">
+						{orderCountByStore.length > 0 ? (
+							<ChartContainer
+								config={chartConfig}
+								className="aspect-auto h-full w-full"
+							>
+								<BarChart
+									accessibilityLayer
+									data={orderCountByStore}
+									margin={{ top: tailwindSpacingToPx(5) }}
+								>
+									<CartesianGrid vertical={false} />
+									<ChartTooltip
+										content={<ChartTooltipContent labelKey="store" />}
+									/>
+									<Bar
+										dataKey="order_count"
+										fill="var(--chart-1)"
+										radius={[6, 6, 0, 0]}
+									>
+										<LabelList
+											dataKey="order_count"
+											position="top"
+											className="fill-foreground text-sm"
+										/>
+									</Bar>
+									<XAxis
+										dataKey="store"
+										tickFormatter={(value) =>
+											String(
+												chartConfig[value as keyof typeof chartConfig]?.label ??
+													value,
+											)
+										}
+									/>
+									<YAxis dataKey="order_count" />
+								</BarChart>
+							</ChartContainer>
+						) : (
+							<div className="flex h-full min-h-40 items-center justify-center rounded-lg border border-border/80 border-dashed bg-muted/20 px-4 text-center text-muted-foreground text-sm">
+								No orders found for the selected filters
+							</div>
+						)}
+					</div>
 				</CardContent>
 			</Card>
 		</section>
