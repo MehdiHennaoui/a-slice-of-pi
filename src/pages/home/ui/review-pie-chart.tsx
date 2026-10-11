@@ -1,6 +1,5 @@
+import { StarIcon } from "lucide-react";
 import { LabelList, Pie, PieChart } from "recharts";
-
-import { reviewsBySentimentThisYear } from "../model/review/review";
 import {
 	Card,
 	CardContent,
@@ -13,6 +12,8 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/shared/components/ui/chart";
+import { CURRENT_YEAR } from "@/shared/config";
+import { reviewsBySentimentThisYear } from "../model/review/review";
 
 const config: ChartConfig = {
 	delighted: {
@@ -29,13 +30,13 @@ const config: ChartConfig = {
 	},
 } satisfies ChartConfig;
 
-export function ReviewPieChart() {
+export function ReviewPieChart({ className }: { className?: string }) {
 	return (
-		<section>
+		<section className={className}>
 			<Card>
 				<CardHeader>
 					<CardTitle>
-						<h1>Review Pie Chart 2026 by sentiment</h1>
+						<StarIcon /> <h1>Reviews {CURRENT_YEAR} by sentiment</h1>
 					</CardTitle>
 				</CardHeader>
 				<CardContent>
@@ -43,7 +44,7 @@ export function ReviewPieChart() {
 						config={config}
 						className="mx-auto aspect-square max-h-50 w-auto"
 					>
-						<PieChart>
+						<PieChart accessibilityLayer>
 							<ChartTooltip content={<ChartTooltipContent />} />
 							<Pie
 								data={reviewsBySentimentThisYear}

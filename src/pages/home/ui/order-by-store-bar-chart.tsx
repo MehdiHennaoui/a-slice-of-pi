@@ -1,3 +1,4 @@
+import { StoreIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
 	Bar,
@@ -29,6 +30,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/shared/components/ui/select";
+import { CURRENT_YEAR } from "@/shared/config";
 import {
 	countOrdersByStore,
 	filterOrdersByPizzaTypeOrSize,
@@ -66,7 +68,7 @@ const chartConfig: ChartConfig = {
 const PIZZA_FILTER_OPTIONS = ["all", ...PIZZA_TYPES] as const;
 const PIZZA_SIZE_FILTER_OPTIONS = ["all", ...PIZZA_SIZES] as const;
 
-export function OrderByStoreBarChart() {
+export function OrderByStoreBarChart({ className }: { className?: string }) {
 	const [pizzaSelected, setPizzaSelected] = useState<PizzaType | "all">("all");
 	const [pizzaSizeSelected, setPizzaSizeSelected] = useState<PizzaSize | "all">(
 		"all",
@@ -88,11 +90,11 @@ export function OrderByStoreBarChart() {
 	};
 
 	return (
-		<section>
+		<section className={className}>
 			<Card>
 				<CardHeader>
 					<CardTitle>
-						<h1>Order by Store</h1>
+						<StoreIcon /> <h1>Order by Store for {CURRENT_YEAR}</h1>
 					</CardTitle>
 					<CardDescription>
 						<FieldGroup>
@@ -117,12 +119,16 @@ export function OrderByStoreBarChart() {
 				<CardContent>
 					{orderCountByStore.length > 0 ? (
 						<ChartContainer config={chartConfig}>
-							<BarChart data={orderCountByStore}>
+							<BarChart accessibilityLayer data={orderCountByStore}>
 								<CartesianGrid vertical={false} />
 								<ChartTooltip
 									content={<ChartTooltipContent labelKey="store" />}
 								/>
-								<Bar dataKey="order_count">
+								<Bar
+									dataKey="order_count"
+									fill="var(--chart-1)"
+									radius={[6, 6, 0, 0]}
+								>
 									<LabelList
 										dataKey="order_count"
 										position="top"
