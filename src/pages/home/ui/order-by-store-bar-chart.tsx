@@ -36,6 +36,7 @@ import {
 	SelectValue,
 } from "@/shared/components/ui/select";
 import { CURRENT_YEAR } from "@/shared/config";
+import { tailwindSpacingToPx } from "@/shared/lib/tailwind-spacing";
 import {
 	countOrdersByStore,
 	filterOrdersByPizzaTypeOrSize,
@@ -145,7 +146,11 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 				<CardContent>
 					{orderCountByStore.length > 0 ? (
 						<ChartContainer config={chartConfig}>
-							<BarChart accessibilityLayer data={orderCountByStore}>
+							<BarChart
+								accessibilityLayer
+								data={orderCountByStore}
+								margin={{ top: tailwindSpacingToPx(6) }}
+							>
 								<CartesianGrid vertical={false} />
 								<ChartTooltip
 									content={<ChartTooltipContent labelKey="store" />}

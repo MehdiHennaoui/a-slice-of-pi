@@ -1,12 +1,5 @@
 import { ChartLineIcon } from "lucide-react";
-import {
-	CartesianGrid,
-	LabelList,
-	Line,
-	LineChart,
-	XAxis,
-	YAxis,
-} from "recharts";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import { revenueByMonth } from "@/pages/home/model/revenue/revenue-by-month";
 import {
 	Card,
@@ -21,6 +14,7 @@ import {
 	ChartTooltipContent,
 } from "@/shared/components/ui/chart";
 import { CURRENT_YEAR } from "@/shared/config";
+import { tailwindSpacingToPx } from "@/shared/lib/tailwind-spacing";
 
 const chartConfig: ChartConfig = {
 	total: {
@@ -46,24 +40,27 @@ export function MonthlyRevenueLineChart({ className }: { className?: string }) {
 							<Line
 								type="monotone"
 								dataKey="total"
-								stroke="var(--color-total)"
 								strokeWidth={2.5}
-								dot={{ r: 3, fill: "var(--color-total)" }}
+								stroke="var(--chart-1)"
+								dot={{ r: 3, fill: "var(--chart-1)" }}
 								activeDot={{ r: 5 }}
-							>
-								<LabelList
-									dataKey="total"
-									position="top"
-									offset={12}
-									className="fill-foreground"
-									formatter={(value) => `${value} $`}
-								/>
-							</Line>
-							<XAxis dataKey="month" />
+							/>
+							<XAxis
+								dataKey="month"
+								padding={{
+									left: tailwindSpacingToPx(2),
+									right: tailwindSpacingToPx(2),
+								}}
+							/>
 							<YAxis dataKey="total" tickFormatter={(value) => `${value} $`} />
 							<ChartTooltip
 								cursor={false}
-								content={<ChartTooltipContent indicator="line" />}
+								content={
+									<ChartTooltipContent
+										indicator="line"
+										formatter={(value) => `${value} $`}
+									/>
+								}
 							/>
 						</LineChart>
 					</ChartContainer>

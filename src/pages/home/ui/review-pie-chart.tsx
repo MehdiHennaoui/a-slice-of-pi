@@ -13,6 +13,7 @@ import {
 	ChartTooltipContent,
 } from "@/shared/components/ui/chart";
 import { CURRENT_YEAR } from "@/shared/config";
+import { tailwindSpacingToPx } from "@/shared/lib/tailwind-spacing";
 import { reviewsBySentimentThisYear } from "../model/review/review";
 
 const config: ChartConfig = {
@@ -30,6 +31,8 @@ const config: ChartConfig = {
 	},
 } satisfies ChartConfig;
 
+const chartMargin = tailwindSpacingToPx(10);
+
 export function ReviewPieChart({ className }: { className?: string }) {
 	return (
 		<section className={className}>
@@ -42,9 +45,17 @@ export function ReviewPieChart({ className }: { className?: string }) {
 				<CardContent>
 					<ChartContainer
 						config={config}
-						className="mx-auto aspect-square max-h-50 w-auto"
+						className="mx-auto aspect-square max-h-96 w-auto"
 					>
-						<PieChart accessibilityLayer>
+						<PieChart
+							accessibilityLayer
+							margin={{
+								top: chartMargin,
+								right: chartMargin,
+								bottom: chartMargin,
+								left: chartMargin,
+							}}
+						>
 							<ChartTooltip content={<ChartTooltipContent />} />
 							<Pie
 								data={reviewsBySentimentThisYear}
