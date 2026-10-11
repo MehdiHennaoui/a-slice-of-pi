@@ -100,7 +100,7 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 	return (
 		<section className={className}>
 			<Card>
-				<CardHeader className="gap-4 border-b pb-(--card-spacing)">
+				<CardHeader className="gap-4">
 					<CardTitle>
 						<StoreIcon /> <h1>Order by Store for {CURRENT_YEAR}</h1>
 					</CardTitle>
@@ -202,10 +202,6 @@ const SIZE_LABELS: Record<string, string> = {
 	L: "Large",
 };
 
-function formatFilterOption(option: string) {
-	return SIZE_LABELS[option] ?? option;
-}
-
 function SelectFilter<T extends SelectFilterOption>({
 	label,
 	icon,
@@ -238,4 +234,8 @@ function SelectFilter<T extends SelectFilterOption>({
 			</Select>
 		</Field>
 	);
+}
+
+function formatFilterOption(option: string) {
+	return SIZE_LABELS[option] ?? option;
 }
