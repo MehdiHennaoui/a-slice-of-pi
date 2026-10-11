@@ -11,7 +11,7 @@ import { totalMoneyForOneYear } from "../model/revenue/yearly-revenue";
 export function YearlyRevenue({ className }: { className?: string }) {
 	return (
 		<section className={className}>
-			<Card>
+			<Card className="flex h-full min-h-0 flex-col">
 				<CardHeader>
 					<CardTitle>
 						<BadgeDollarSignIcon />
@@ -21,7 +21,7 @@ export function YearlyRevenue({ className }: { className?: string }) {
 				<CardContent>
 					<p className="font-heading font-semibold text-4xl text-primary tabular-nums tracking-tight sm:text-5xl">
 						{totalMoneyForOneYear}
-						<span className="pl-1 text-3xl sm:text-4xl">{"$"}</span>
+						<span className="pl-1">{"$"}</span>
 					</p>
 				</CardContent>
 			</Card>

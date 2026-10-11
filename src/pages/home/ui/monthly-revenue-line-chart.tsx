@@ -1,3 +1,4 @@
+import { cn } from "cn";
 import { ChartLineIcon } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import { revenueByMonth } from "@/pages/home/model/revenue/revenue-by-month";
@@ -27,14 +28,17 @@ export function MonthlyRevenueLineChart({ className }: { className?: string }) {
 	return (
 		<section className={className}>
 			<Card className="flex h-full flex-col">
-				<CardHeader>
+				<CardHeader className="shrink-0">
 					<CardTitle>
 						<ChartLineIcon />
 						<h1>Monthly Revenue for {CURRENT_YEAR}</h1>
 					</CardTitle>
 				</CardHeader>
-				<CardContent className="flex flex-1 flex-col justify-end">
-					<ChartContainer config={chartConfig} className="h-full">
+				<CardContent className="flex flex-1 flex-col">
+					<ChartContainer
+						config={chartConfig}
+						className="aspect-auto! h-full w-full"
+					>
 						<LineChart accessibilityLayer data={revenueByMonth}>
 							<CartesianGrid vertical={false} strokeDasharray="3 3" />
 							<Line

@@ -1,3 +1,4 @@
+import { cn } from "cn";
 import { StarIcon } from "lucide-react";
 import { LabelList, Pie, PieChart } from "recharts";
 import {
@@ -30,22 +31,21 @@ const config: ChartConfig = {
 		color: "var(--chart-1)",
 	},
 } satisfies ChartConfig;
-
 const CHART_MARGIN = tailwindSpacingToPx(10);
 
 export function ReviewPieChart({ className }: { className?: string }) {
 	return (
 		<section className={className}>
-			<Card>
-				<CardHeader>
+			<Card className="flex h-full min-h-0 flex-col">
+				<CardHeader className="shrink-0">
 					<CardTitle>
 						<StarIcon /> <h1>Reviews {CURRENT_YEAR} by sentiment</h1>
 					</CardTitle>
 				</CardHeader>
-				<CardContent>
+				<CardContent className="flex min-h-0 flex-1 flex-col">
 					<ChartContainer
 						config={config}
-						className="mx-auto aspect-square max-h-96 w-auto"
+						className="mx-auto aspect-square h-full max-h-full w-auto"
 					>
 						<PieChart
 							accessibilityLayer

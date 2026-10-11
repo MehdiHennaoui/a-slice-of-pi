@@ -1,3 +1,4 @@
+import { cn } from "cn";
 import {
 	ListFilterIcon,
 	PizzaIcon,
@@ -100,8 +101,8 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 
 	return (
 		<section className={className}>
-			<Card>
-				<CardHeader className="gap-4">
+			<Card className="flex h-full flex-col">
+				<CardHeader className="shrink-0 gap-4">
 					<CardTitle>
 						<StoreIcon /> <h1>Order by Store for {CURRENT_YEAR}</h1>
 					</CardTitle>
@@ -143,9 +144,12 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 						</FieldGroup>
 					</div>
 				</CardHeader>
-				<CardContent>
+				<CardContent className="flex min-h-0 flex-1 flex-col">
 					{orderCountByStore.length > 0 ? (
-						<ChartContainer config={chartConfig}>
+						<ChartContainer
+							config={chartConfig}
+							className="aspect-auto! h-full w-full"
+						>
 							<BarChart
 								accessibilityLayer
 								data={orderCountByStore}
@@ -179,7 +183,7 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 							</BarChart>
 						</ChartContainer>
 					) : (
-						<div className="flex min-h-40 items-center justify-center rounded-lg border border-border/80 border-dashed bg-muted/20 px-4 text-center text-muted-foreground text-sm">
+						<div className="flex h-full min-h-40 items-center justify-center rounded-lg border border-border/80 border-dashed bg-muted/20 px-4 text-center text-muted-foreground text-sm">
 							No orders found for the selected filters
 						</div>
 					)}
