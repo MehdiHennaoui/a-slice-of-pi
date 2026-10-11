@@ -45,7 +45,7 @@ export function ReviewPieChart({ className }: { className?: string }) {
 				<CardContent className="flex min-h-0 flex-1 flex-col">
 					<ChartContainer
 						config={config}
-						className="mx-auto aspect-square h-full max-h-full w-auto"
+						className="mx-auto aspect-square h-full max-h-full min-h-72 w-auto lg:min-h-0"
 					>
 						<PieChart
 							accessibilityLayer

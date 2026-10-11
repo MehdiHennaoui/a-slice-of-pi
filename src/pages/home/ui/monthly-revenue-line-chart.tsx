@@ -37,7 +37,7 @@ export function MonthlyRevenueLineChart({ className }: { className?: string }) {
 				<CardContent className="flex flex-1 flex-col">
 					<ChartContainer
 						config={chartConfig}
-						className="aspect-auto! h-full w-full"
+						className="aspect-auto! h-full min-h-72 w-full lg:min-h-0"
 					>
 						<LineChart accessibilityLayer data={revenueByMonth}>
 							<CartesianGrid vertical={false} strokeDasharray="3 3" />

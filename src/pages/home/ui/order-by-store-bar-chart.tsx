@@ -108,7 +108,7 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="flex min-h-0 flex-1 flex-col gap-2 lg:flex-row">
-					<aside className="w-full shrink-0 lg:w-40">
+					<aside className="w-full lg:w-40">
 						<div className="rounded-xl border border-border/70 bg-muted/35 p-3">
 							<h2 className="mb-3 flex items-center gap-1.5 font-medium text-foreground text-sm">
 								<ListFilterIcon className="size-3.5 text-muted-foreground" />
@@ -153,7 +153,7 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 						{orderCountByStore.length > 0 ? (
 							<ChartContainer
 								config={chartConfig}
-								className="aspect-auto h-full w-full"
+								className="aspect-auto! h-full min-h-72 w-full lg:min-h-0"
 							>
 								<BarChart
 									accessibilityLayer
