@@ -18,20 +18,20 @@ import { reviewsBySentimentThisYear } from "../model/review/review";
 
 const config: ChartConfig = {
 	delighted: {
-		color: "var(--chart-1)",
+		color: "var(--chart-3)",
 	},
 	happy: {
 		color: "var(--chart-2)",
 	},
 	sad: {
-		color: "var(--chart-3)",
+		color: "var(--chart-4)",
 	},
 	angry: {
-		color: "var(--chart-4)",
+		color: "var(--chart-1)",
 	},
 } satisfies ChartConfig;
 
-const chartMargin = tailwindSpacingToPx(10);
+const CHART_MARGIN = tailwindSpacingToPx(10);
 
 export function ReviewPieChart({ className }: { className?: string }) {
 	return (
@@ -50,13 +50,19 @@ export function ReviewPieChart({ className }: { className?: string }) {
 						<PieChart
 							accessibilityLayer
 							margin={{
-								top: chartMargin,
-								right: chartMargin,
-								bottom: chartMargin,
-								left: chartMargin,
+								top: CHART_MARGIN,
+								right: CHART_MARGIN,
+								bottom: CHART_MARGIN,
+								left: CHART_MARGIN,
 							}}
 						>
-							<ChartTooltip content={<ChartTooltipContent />} />
+							<ChartTooltip
+								content={
+									<ChartTooltipContent
+										formatter={(value) => `${value} reviews`}
+									/>
+								}
+							/>
 							<Pie
 								data={reviewsBySentimentThisYear}
 								label={({ name }) => name}
