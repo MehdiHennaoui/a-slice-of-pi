@@ -1,4 +1,3 @@
-import { cn } from "cn";
 import {
 	ListFilterIcon,
 	PizzaIcon,
