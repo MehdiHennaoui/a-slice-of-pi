@@ -17,28 +17,42 @@ const orderDataE2eFixture = path.resolve(
 	"./e2e/fixtures/order-data.json",
 );
 
-function e2eOrderDataFixturePlugin(mode: string): Plugin {
+function e2eDataFixturePlugin(mode: string): Plugin {
+	const fixtures = [
+		{
+			sourceFile: orderDataJson,
+			fixtureFile: orderDataE2eFixture,
+			importerDir: `${path.sep}order${path.sep}`,
+			fileName: "order-data.json",
+		},
+	] as const;
+
 	return {
-		name: "e2e-order-data-fixture",
+		name: "e2e-data-fixture",
 		enforce: "pre",
 		async resolveId(source, importer, options) {
-			if (mode !== "e2e") {
+			if (mode !== "e2e" || !importer) {
 				return null;
 			}
 
-			const isOrderDataImport =
-				source === "./order-data.json" ||
-				source.endsWith("/order-data.json") ||
-				path.resolve(path.dirname(importer ?? ""), source) === orderDataJson;
+			for (const fixture of fixtures) {
+				const resolvedSource = path.resolve(path.dirname(importer), source);
+				const isTargetImport =
+					source === `./${fixture.fileName}` ||
+					source.endsWith(`/${fixture.fileName}`) ||
+					resolvedSource === fixture.sourceFile;
 
-			if (!isOrderDataImport || !importer?.includes(`${path.sep}order${path.sep}`)) {
-				return null;
+				if (!isTargetImport || !importer.includes(fixture.importerDir)) {
+					continue;
+				}
+
+				return this.resolve(fixture.fixtureFile, importer, {
+					...options,
+					skipSelf: true,
+				});
 			}
 
-			return this.resolve(orderDataE2eFixture, importer, {
-				...options,
-				skipSelf: true,
-			});
+			return null;
 		},
 	};
 }
@@ -47,7 +61,7 @@ function e2eOrderDataFixturePlugin(mode: string): Plugin {
 export default defineConfig(({ mode }) => ({
 	base: "/a-slice-of-pi/",
 	plugins: [
-		e2eOrderDataFixturePlugin(mode),
+		e2eDataFixturePlugin(mode),
 		react(),
 		babel({ presets: [reactCompilerPreset()] }),
 		tailwindcss(),
