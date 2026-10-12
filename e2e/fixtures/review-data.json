@@ -1,0 +1,44 @@
+[
+	{
+		"review_id": 1,
+		"sentiment": "delighted",
+		"store": "Kanata",
+		"date": "2023-01-15",
+		"message": "Absolutely loved the pizza."
+	},
+	{
+		"review_id": 2,
+		"sentiment": "happy",
+		"store": "Orleans",
+		"date": "2023-02-14",
+		"message": "Great atmosphere and delicious pizza."
+	},
+	{
+		"review_id": 3,
+		"sentiment": "sad",
+		"store": "Downtown",
+		"date": "2023-03-15",
+		"message": "Disappointed with the pizza quality."
+	},
+	{
+		"review_id": 4,
+		"sentiment": "happy",
+		"store": "The Glebe",
+		"date": "2023-05-20",
+		"message": "Amazing pizza and friendly staff."
+	},
+	{
+		"review_id": 5,
+		"sentiment": "delighted",
+		"store": "Kanata",
+		"date": "2023-06-15",
+		"message": "Best pizza I've ever had."
+	},
+	{
+		"review_id": 6,
+		"sentiment": "angry",
+		"store": "Orleans",
+		"date": "2022-07-15",
+		"message": "Cold slice last year."
+	}
+]

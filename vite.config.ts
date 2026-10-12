@@ -12,9 +12,17 @@ const orderDataJson = path.resolve(
 	__dirname,
 	"./src/pages/home/model/order/order-data.json",
 );
+const reviewDataJson = path.resolve(
+	__dirname,
+	"./src/pages/home/model/review/review-data.json",
+);
 const orderDataE2eFixture = path.resolve(
 	__dirname,
 	"./e2e/fixtures/order-data.json",
+);
+const reviewDataE2eFixture = path.resolve(
+	__dirname,
+	"./e2e/fixtures/review-data.json",
 );
 
 function e2eDataFixturePlugin(mode: string): Plugin {
@@ -24,6 +32,12 @@ function e2eDataFixturePlugin(mode: string): Plugin {
 			fixtureFile: orderDataE2eFixture,
 			importerDir: `${path.sep}order${path.sep}`,
 			fileName: "order-data.json",
+		},
+		{
+			sourceFile: reviewDataJson,
+			fixtureFile: reviewDataE2eFixture,
+			importerDir: `${path.sep}review${path.sep}`,
+			fileName: "review-data.json",
 		},
 	] as const;
 

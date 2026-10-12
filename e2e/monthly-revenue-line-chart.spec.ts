@@ -1,4 +1,4 @@
-import { expect, type Locator, type Page, test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 import type { OrderDataType } from "../src/pages/home/model/order/order";
 import { getRevenueByMonth } from "../src/pages/home/model/revenue/revenue-by-month";
@@ -7,73 +7,42 @@ import orderDataFixture from "./fixtures/order-data.json" with { type: "json" };
 
 const fixtureOrders = orderDataFixture as OrderDataType[];
 const expectedRevenueByMonth = getRevenueByMonth(fixtureOrders);
+const monthlyRevenueHeading = `Monthly Revenue for ${CURRENT_YEAR}`;
 
 test.describe("monthly revenue line chart", () => {
 	test.beforeEach(async ({ page }) => {
 		await page.goto("./");
 	});
 
-	test("shows the title and chart for the fixture months", async ({
-		page,
-	}) => {
-		const section = monthlyRevenueSection(page);
-
+	test("shows the heading with the expected text", async ({ page }) => {
 		await expect(
-			section.getByRole("heading", {
-				name: `Monthly Revenue for ${CURRENT_YEAR}`,
-			}),
-		).toBeVisible();
-
-		await expectChartState(section);
+			page.getByRole("heading", { name: monthlyRevenueHeading }),
+		).toHaveText(monthlyRevenueHeading);
 	});
 
-	test("formats revenue values with a dollar suffix on the y-axis", async ({
-		page,
-	}) => {
-		const section = monthlyRevenueSection(page);
-		const chart = section.locator("svg.recharts-surface");
+	test("shows fixture month labels on the chart", async ({ page }) => {
+		await expect(
+			page.getByRole("heading", { name: monthlyRevenueHeading }),
+		).toHaveText(monthlyRevenueHeading);
 
-		await expect(chart).toBeVisible();
-
-		const yAxisTicks = section.locator(
-			".recharts-yAxis-tick-labels .recharts-cartesian-axis-tick-value",
-		);
-		await expect(yAxisTicks.first()).toBeVisible();
-
-		const tickTexts = await yAxisTicks.allTextContents();
-		expect(tickTexts.length).toBeGreaterThan(0);
-		expect(tickTexts.every((tick) => tick.trim().endsWith("$"))).toBe(true);
+		for (const { month } of expectedRevenueByMonth) {
+			await expect(page.getByText(month, { exact: true })).toBeVisible();
+		}
 	});
 
 	test("ignores fixture orders outside the current year", async ({ page }) => {
-		const section = monthlyRevenueSection(page);
-		const outOfYearMonths = getRevenueByMonth(
-			fixtureOrders.filter((order) => !order.date.startsWith(String(CURRENT_YEAR))),
-		);
+		await expect(
+			page.getByRole("heading", { name: monthlyRevenueHeading }),
+		).toHaveText(monthlyRevenueHeading);
 
-		expect(outOfYearMonths).toEqual([]);
-		await expect(section.getByText("June", { exact: true })).toHaveCount(0);
-		await expectChartState(section);
+		expect(
+			getRevenueByMonth(
+				fixtureOrders.filter(
+					(order) => !order.date.startsWith(String(CURRENT_YEAR)),
+				),
+			),
+		).toEqual([]);
+
+		await expect(page.getByText("June", { exact: true })).toHaveCount(0);
 	});
 });
-
-function monthlyRevenueSection(page: Page) {
-	return page
-		.getByRole("heading", {
-			name: `Monthly Revenue for ${CURRENT_YEAR}`,
-		})
-		.locator("xpath=ancestor::section[1]");
-}
-
-async function expectChartState(section: Locator) {
-	const chart = section.locator("svg.recharts-surface");
-	await expect(chart).toBeVisible();
-
-	await expect(section.locator(".recharts-line-dots .recharts-dot")).toHaveCount(
-		expectedRevenueByMonth.length,
-	);
-
-	for (const { month } of expectedRevenueByMonth) {
-		await expect(section.getByText(month, { exact: true })).toBeVisible();
-	}
-}

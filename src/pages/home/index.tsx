@@ -1,6 +1,6 @@
 import { MonthlyRevenueLineChart } from "./ui/monthly-revenue-line-chart";
 import { OrderByStoreBarChart } from "./ui/order-by-store-bar-chart/order-by-store-bar-chart";
-import { ReviewPieChart } from "./ui/review-pie-chart";
+import { ReviewPieChart } from "./ui/review-pie-chart/review-pie-chart";
 import { YearlyRevenue } from "./ui/yearly-revenue";
 
 export const HomePage = () => {
