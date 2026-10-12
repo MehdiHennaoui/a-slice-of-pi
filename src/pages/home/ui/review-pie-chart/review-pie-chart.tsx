@@ -7,7 +7,6 @@ import {
 	CardTitle,
 } from "@/shared/components/ui/card";
 import {
-	type ChartConfig,
 	ChartContainer,
 	ChartLegend,
 	ChartLegendContent,
@@ -15,29 +14,8 @@ import {
 	ChartTooltipContent,
 } from "@/shared/components/ui/chart";
 import { CURRENT_YEAR } from "@/shared/config";
-import { reviewsBySentimentThisYear } from "../model/review/review";
-
-const config: ChartConfig = {
-	count: {
-		label: "Reviews count",
-	},
-	delighted: {
-		label: "Delighted",
-		color: "var(--chart-3)",
-	},
-	happy: {
-		label: "Happy",
-		color: "var(--chart-2)",
-	},
-	sad: {
-		label: "Sad",
-		color: "var(--chart-4)",
-	},
-	angry: {
-		label: "Angry",
-		color: "var(--chart-1)",
-	},
-} satisfies ChartConfig;
+import { reviewsBySentimentThisYear } from "../../model/review/review";
+import { chartConfig } from "./chart-config";
 
 export function ReviewPieChart({ className }: { className?: string }) {
 	return (
@@ -50,7 +28,7 @@ export function ReviewPieChart({ className }: { className?: string }) {
 				</CardHeader>
 				<CardContent className="flex min-h-0 flex-1 flex-col">
 					<ChartContainer
-						config={config}
+						config={chartConfig}
 						className="mx-auto aspect-square h-full max-h-full min-h-72 w-auto lg:min-h-0"
 					>
 						<PieChart accessibilityLayer>
