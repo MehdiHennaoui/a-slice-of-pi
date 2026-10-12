@@ -21,7 +21,7 @@ Pizza shop analytics dashboard built with React. It turns order, pricing, and re
 | **UI & styling** | [Tailwind CSS 4](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/) |
 | **Charts** | [Shadcn Chart](https://ui.shadcn.com/docs/components/chart) on [Recharts](https://recharts.org/) |
 | **Architecture** | [Feature-Sliced Design (FSD)](https://feature-sliced.design/) |
-| **Quality** | [Biome](https://biomejs.dev/) (lint/format), [Vitest](https://vitest.dev/) (tests) |
+| **Quality** | [Biome](https://biomejs.dev/) (lint/format), [Vitest](https://vitest.dev/) (unit), [Playwright](https://playwright.dev/) (e2e) |
 
 ## Prerequisites
 
@@ -98,3 +98,5 @@ In practice that means:
 | `pnpm check:fix` | Auto-fix Biome lint + format issues |
 | `pnpm test` | Run unit tests once |
 | `pnpm test:watch` | Run tests in watch mode |
+| `pnpm test:e2e` | Run Playwright end-to-end tests |
+| `pnpm test:e2e:ui` | Open the Playwright UI runner |
