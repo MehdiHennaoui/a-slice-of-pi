@@ -86,30 +86,3 @@ export function ReviewPieChart({ className }: { className?: string }) {
 		</section>
 	);
 }
-
-const RADIAN = Math.PI / 180;
-function renderLabel({
-	cx,
-	cy,
-	midAngle,
-	outerRadius,
-	name,
-}: PieLabelRenderProps) {
-	if (cx == null || cy == null || midAngle == null || outerRadius == null) {
-		return null;
-	}
-	const radius = Number(outerRadius) + 20;
-	const x = Number(cx) + radius * Math.cos(-midAngle * RADIAN);
-	const y = Number(cy) + radius * Math.sin(-midAngle * RADIAN);
-	return (
-		<text
-			x={x}
-			y={y}
-			fill="var(--foreground)"
-			textAnchor={x > Number(cx) ? "start" : "end"}
-			dominantBaseline="central"
-		>
-			{name}
-		</text>
-	);
-}
