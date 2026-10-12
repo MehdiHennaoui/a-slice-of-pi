@@ -162,7 +162,9 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 								>
 									<CartesianGrid vertical={false} />
 									<ChartTooltip
-										content={<ChartTooltipContent labelKey="store" />}
+										content={
+											<ChartTooltipContent indicator="line" labelKey="store" />
+										}
 									/>
 									<Bar
 										dataKey="order_count"
