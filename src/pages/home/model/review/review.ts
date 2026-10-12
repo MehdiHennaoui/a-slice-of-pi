@@ -1,5 +1,5 @@
 import { isCurrentYear } from "@/shared/lib/is-current-year";
-import rawReviewData from "./review-data.json";
+import rawReviewData from "./review-data.json" with { type: "json" };
 
 type StoreType = "Kanata" | "Orleans" | "Downtown" | "Sandy Hill" | "The Glebe";
 type ReviewData = {

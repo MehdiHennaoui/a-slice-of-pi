@@ -1,6 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const baseURL = "http://localhost:5173/a-slice-of-pi/";
+const baseURL = "http://localhost:5174/a-slice-of-pi/";
 
 export default defineConfig({
 	testDir: "./e2e",
@@ -20,8 +20,9 @@ export default defineConfig({
 		},
 	],
 	webServer: {
-		command: "pnpm dev",
+		command: "pnpm exec vite --mode e2e --port 5174",
 		url: baseURL,
-		reuseExistingServer: !process.env.CI,
+		// Always start the e2e-mode server so fixtures are applied (also ready for CI).
+		reuseExistingServer: false,
 	},
 });

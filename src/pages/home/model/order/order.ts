@@ -1,6 +1,6 @@
 import slugify from "@sindresorhus/slugify";
 import type { PizzaSize } from "../pricing/pricing";
-import orderData from "./order-data.json";
+import orderData from "./order-data.json" with { type: "json" };
 
 export const PIZZA_TYPES = [
 	"Cheese",
