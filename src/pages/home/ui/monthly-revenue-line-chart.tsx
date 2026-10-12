@@ -1,4 +1,3 @@
-import { cn } from "cn";
 import { ChartLineIcon } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import { revenueByMonth } from "@/pages/home/model/revenue/revenue-by-month";
