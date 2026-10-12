@@ -5,6 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
+		"dev:e2e": "vite --mode e2e --port 5174",
 		"dev:host": "vite --host",
 		"build": "tsc -b && vite build",
 		"lint": "biome lint",

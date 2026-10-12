@@ -1,0 +1,32 @@
+[
+	{
+		"order_id": 1,
+		"store": "Kanata",
+		"items": [{ "type": "Cheese", "size": "S" }],
+		"date": "2023-01-05"
+	},
+	{
+		"order_id": 2,
+		"store": "Orleans",
+		"items": [{ "type": "Hawaiian", "size": "L" }],
+		"date": "2023-02-14"
+	},
+	{
+		"order_id": 3,
+		"store": "Kanata",
+		"items": [{ "type": "Cheese", "size": "M" }],
+		"date": "2023-03-01"
+	},
+	{
+		"order_id": 4,
+		"store": "Downtown",
+		"items": [{ "type": "Pepperoni", "size": "S" }],
+		"date": "2023-04-10"
+	},
+	{
+		"order_id": 5,
+		"store": "The Glebe",
+		"items": [{ "type": "Cheese", "size": "S" }],
+		"date": "2023-05-20"
+	}
+]

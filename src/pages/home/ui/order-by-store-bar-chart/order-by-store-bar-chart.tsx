@@ -5,7 +5,7 @@ import {
 	RulerDimensionLineIcon,
 	StoreIcon,
 } from "lucide-react";
-import { type ReactNode, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
 	Bar,
 	BarChart,
@@ -22,57 +22,26 @@ import {
 	CardTitle,
 } from "@/shared/components/ui/card";
 import {
-	type ChartConfig,
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/shared/components/ui/chart";
-import { Field, FieldGroup, FieldLabel } from "@/shared/components/ui/field";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/shared/components/ui/select";
+import { FieldGroup } from "@/shared/components/ui/field";
 import { CURRENT_YEAR } from "@/shared/config";
 import { tailwindSpacingToPx } from "@/shared/lib/tailwind-spacing";
 import {
 	countOrdersByStore,
 	filterOrdersByPizzaTypeOrSize,
 	orderDataArray,
-	PIZZA_TYPES,
 	type PizzaType,
-} from "../model/order/order";
-import { PIZZA_SIZES, type PizzaSize } from "../model/pricing/pricing";
-
-const chartConfig: ChartConfig = {
-	order_count: {
-		label: "Order count",
-	},
-	kanata: {
-		label: "Kanata",
-		color: "var(--chart-1)",
-	},
-	orleans: {
-		label: "Orleans",
-		color: "var(--chart-2)",
-	},
-	downtown: {
-		label: "Downtown",
-		color: "var(--chart-3)",
-	},
-	"sandy-hill": {
-		label: "Sandy Hill",
-		color: "var(--chart-4)",
-	},
-	"the-glebe": {
-		label: "The Glebe",
-		color: "var(--chart-5)",
-	},
-};
-const PIZZA_FILTER_OPTIONS = ["all", ...PIZZA_TYPES] as const;
-const PIZZA_SIZE_FILTER_OPTIONS = ["all", ...PIZZA_SIZES] as const;
+} from "../../model/order/order";
+import type { PizzaSize } from "../../model/pricing/pricing";
+import {
+	chartConfig,
+	PIZZA_FILTER_OPTIONS,
+	PIZZA_SIZE_FILTER_OPTIONS,
+} from "./chart-config";
+import { SelectFilter } from "./select-filter";
 
 export function OrderByStoreBarChart({ className }: { className?: string }) {
 	const [pizzaSelected, setPizzaSelected] = useState<PizzaType | "all">("all");
@@ -198,60 +167,4 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 			</Card>
 		</section>
 	);
-}
-
-type SelectFilterOption = string;
-type SelectFilterProps<T extends SelectFilterOption> = {
-	label: string;
-	icon?: ReactNode;
-	value: T;
-	options: readonly T[];
-	placeholder: string;
-	onValueChange: (value: T) => void;
-	className?: string;
-};
-
-const SIZE_LABELS: Record<string, string> = {
-	all: "All",
-	S: "Small",
-	M: "Medium",
-	L: "Large",
-};
-
-function SelectFilter<T extends SelectFilterOption>({
-	label,
-	icon,
-	value,
-	options,
-	placeholder,
-	onValueChange,
-	className,
-}: SelectFilterProps<T>) {
-	return (
-		<Field className={className}>
-			<FieldLabel className="items-center font-medium text-foreground text-xs tracking-[0.08em]">
-				{icon}
-				{label}
-			</FieldLabel>
-			<Select
-				value={value}
-				onValueChange={(nextValue) => onValueChange(nextValue as T)}
-			>
-				<SelectTrigger className="w-full bg-card">
-					<SelectValue placeholder={placeholder} />
-				</SelectTrigger>
-				<SelectContent>
-					{options.map((option) => (
-						<SelectItem key={option} value={option}>
-							{formatFilterOption(option)}
-						</SelectItem>
-					))}
-				</SelectContent>
-			</Select>
-		</Field>
-	);
-}
-
-function formatFilterOption(option: string) {
-	return SIZE_LABELS[option] ?? option;
 }
