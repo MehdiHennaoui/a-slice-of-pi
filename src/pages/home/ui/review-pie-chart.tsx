@@ -1,5 +1,5 @@
 import { StarIcon } from "lucide-react";
-import { LabelList, Pie, PieChart, type PieLabelRenderProps } from "recharts";
+import { LabelList, Pie, PieChart } from "recharts";
 import {
 	Card,
 	CardContent,
