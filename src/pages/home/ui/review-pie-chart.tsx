@@ -15,7 +15,6 @@ import {
 	ChartTooltipContent,
 } from "@/shared/components/ui/chart";
 import { CURRENT_YEAR } from "@/shared/config";
-import { tailwindSpacingToPx } from "@/shared/lib/tailwind-spacing";
 import { reviewsBySentimentThisYear } from "../model/review/review";
 
 const config: ChartConfig = {
@@ -39,7 +38,6 @@ const config: ChartConfig = {
 		color: "var(--chart-1)",
 	},
 } satisfies ChartConfig;
-const CHART_MARGIN = tailwindSpacingToPx(5);
 
 export function ReviewPieChart({ className }: { className?: string }) {
 	return (
