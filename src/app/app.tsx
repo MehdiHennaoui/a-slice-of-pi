@@ -1,5 +1,5 @@
 import { PizzaIcon } from "lucide-react";
-import { DateRangePicker, DateRangeProvider } from "@/features/date-range";
+import { DateRangeLabel, DateRangeProvider } from "@/features/date-range";
 import { Home } from "@/pages/home/home";
 import { appText } from "./app-text";
 
@@ -21,7 +21,7 @@ export function App() {
 							</span>
 						</h1>
 					</div>
-					<DateRangePicker className="ml-auto" />
+					<DateRangeLabel className="ml-auto" />
 				</header>
 				<main className="min-h-0 flex-1 overflow-auto p-4 sm:p-6">
 					<Home />
