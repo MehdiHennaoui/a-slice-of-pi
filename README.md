@@ -2,6 +2,8 @@
 
 Pizza shop analytics dashboard built with React. It turns order, pricing, and review data into a clear overview of revenue, store performance, and customer feedback.
 
+**Live demo:** [https://mehdihennaoui.github.io/a-slice-of-pi/](https://mehdihennaoui.github.io/a-slice-of-pi/)
+
 ## Table of contents
 
 - [Stack](#stack)
