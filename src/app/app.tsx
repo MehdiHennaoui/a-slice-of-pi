@@ -1,5 +1,5 @@
 import { PizzaIcon } from "lucide-react";
-import { HomePage } from "@/pages/home";
+import { Home } from "@/pages/home/home";
 
 export function App() {
 	return (
@@ -18,7 +18,7 @@ export function App() {
 				</div>
 			</header>
 			<main className="min-h-0 flex-1 overflow-auto p-4 sm:p-6">
-				<HomePage />
+				<Home />
 			</main>
 		</div>
 	);

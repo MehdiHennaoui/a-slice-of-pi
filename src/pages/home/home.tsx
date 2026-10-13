@@ -3,7 +3,7 @@ import { OrderByStoreBarChart } from "./ui/order-by-store-bar-chart/order-by-sto
 import { ReviewPieChart } from "./ui/review-pie-chart/review-pie-chart";
 import { YearlyRevenue } from "./ui/yearly-revenue";
 
-export const HomePage = () => {
+export const Home = () => {
 	return (
 		<div className="grid gap-4 lg:h-full lg:min-h-180 lg:grid-cols-2 lg:grid-rows-[auto_minmax(0,1fr)_minmax(0,1fr)] lg:gap-2.5">
 			<YearlyRevenue className="animate-rise-in [animation-delay:60ms] lg:col-start-1" />
