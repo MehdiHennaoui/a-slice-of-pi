@@ -12,14 +12,17 @@ import { DateRangePicker } from "@/shared/components/ui/date-range-picker";
 import { CURRENT_YEAR } from "@/shared/config";
 import { yearDateRange } from "@/shared/lib/date";
 
-import { useDateRange, useDateRangeLabel } from "../model/use-date-range";
-import { dateRangeText } from "./date-range-text";
+import {
+	useChoosePeriod,
+	useChoosePeriodLabel,
+} from "../../model/choose-period/use-choose-period";
+import { choosePeriodText } from "./choose-period-text";
 
-const copy = dateRangeText["date-range-label"];
+const copy = choosePeriodText["choose-period"];
 
-export function DateRangeLabel({ className }: { className?: string }) {
-	const { range, setRange } = useDateRange();
-	const label = useDateRangeLabel();
+export function ChoosePeriod({ className }: { className?: string }) {
+	const { range, setRange } = useChoosePeriod();
+	const label = useChoosePeriodLabel();
 	const defaultRange = yearDateRange(CURRENT_YEAR);
 	const isDefault =
 		dayjs(range.from).isSame(defaultRange.from, "day") &&

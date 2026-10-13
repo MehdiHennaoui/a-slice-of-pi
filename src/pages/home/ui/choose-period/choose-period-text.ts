@@ -1,5 +1,5 @@
-export const dateRangeText = {
-	"date-range-label": {
+export const choosePeriodText = {
+	"choose-period": {
 		title: "Choose a period",
 		reset: "Reset period",
 	},

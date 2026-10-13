@@ -1,7 +1,5 @@
 import { ChartLineIcon } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
-import { useDateRange } from "@/features/date-range";
-import { useRevenueByMonth } from "@/pages/home/model/revenue/use-revenue-by-month";
 import {
 	Card,
 	CardContent,
@@ -17,6 +15,8 @@ import {
 import { DataGuard } from "@/shared/components/ui/data-guard/data-guard";
 import { formatDateRange } from "@/shared/lib/date";
 import { tailwindSpacingToPx } from "@/shared/lib/tailwind-spacing";
+import { useChoosePeriod } from "../model/choose-period/use-choose-period";
+import { useRevenueByMonth } from "../model/revenue/use-revenue-by-month";
 import { monthlyRevenueText } from "./monthly-revenue-text";
 
 const copy = monthlyRevenueText["monthly-revenue-chart"];
@@ -29,7 +29,7 @@ const chartConfig: ChartConfig = {
 };
 
 export function MonthlyRevenueLineChart({ className }: { className?: string }) {
-	const { range } = useDateRange();
+	const { range } = useChoosePeriod();
 	const period = formatDateRange(range.from, range.to ?? range.from);
 	const revenueByMonth = useRevenueByMonth();
 

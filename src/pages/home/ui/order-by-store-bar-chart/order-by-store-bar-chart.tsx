@@ -14,7 +14,6 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
-import { useDateRange } from "@/features/date-range";
 import { Button } from "@/shared/components/ui/button";
 import {
 	Card,
@@ -31,6 +30,7 @@ import { DataGuard } from "@/shared/components/ui/data-guard/data-guard";
 import { FieldGroup } from "@/shared/components/ui/field";
 import { formatDateRange } from "@/shared/lib/date";
 import { tailwindSpacingToPx } from "@/shared/lib/tailwind-spacing";
+import { useChoosePeriod } from "../../model/choose-period/use-choose-period";
 import type { PizzaType } from "../../model/order/order";
 import { useOrdersByStore } from "../../model/order/use-orders-by-store";
 import type { PizzaSize } from "../../model/pricing/pricing";
@@ -50,7 +50,7 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 		"all",
 	);
 
-	const { range } = useDateRange();
+	const { range } = useChoosePeriod();
 	const period = formatDateRange(range.from, range.to ?? range.from);
 	const orderCountByStore = useOrdersByStore(pizzaSelected, pizzaSizeSelected);
 
