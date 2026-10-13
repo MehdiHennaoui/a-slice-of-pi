@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import react, { reactCompilerPreset } from "@vitejs/plugin-react";
-import { defineConfig, type Plugin } from "vite";
+import { defineConfig, type Plugin } from "vitest/config";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -84,5 +84,8 @@ export default defineConfig(({ mode }) => ({
 		alias: {
 			"@": path.resolve(__dirname, "./src"),
 		},
+	},
+	test: {
+		exclude: ["**/node_modules/**", "**/dist/**", "e2e/**"],
 	},
 }));
