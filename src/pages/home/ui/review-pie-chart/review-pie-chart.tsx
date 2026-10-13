@@ -1,5 +1,6 @@
 import { StarIcon } from "lucide-react";
 import { LabelList, Pie, PieChart } from "recharts";
+import { useDateRange } from "@/features/date-range";
 import {
 	Card,
 	CardContent,
@@ -13,14 +14,18 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/shared/components/ui/chart";
-import { CURRENT_YEAR } from "@/shared/config";
-import { reviewsBySentimentThisYear } from "../../model/review/review";
+import { formatDateRange } from "@/shared/lib/date";
+import { useReviewsBySentiment } from "../../model/review/use-reviews-by-sentiment";
 import { chartConfig } from "./chart-config";
 import { reviewText } from "./review-text";
 
 const copy = reviewText["review-chart"];
 
 export function ReviewPieChart({ className }: { className?: string }) {
+	const { range } = useDateRange();
+	const period = formatDateRange(range.from, range.to ?? range.from);
+	const reviewsBySentiment = useReviewsBySentiment();
+
 	return (
 		<section className={className}>
 			<Card className="flex h-full min-h-0 flex-col">
@@ -28,7 +33,7 @@ export function ReviewPieChart({ className }: { className?: string }) {
 					<CardTitle>
 						<StarIcon />{" "}
 						<h1>
-							{copy.title} {CURRENT_YEAR} {copy.titleSuffix}
+							{copy.title} {period} {copy.titleSuffix}
 						</h1>
 					</CardTitle>
 				</CardHeader>
@@ -49,7 +54,7 @@ export function ReviewPieChart({ className }: { className?: string }) {
 								}
 							/>
 							<Pie
-								data={reviewsBySentimentThisYear}
+								data={reviewsBySentiment}
 								dataKey="count"
 								nameKey="sentiment"
 							>

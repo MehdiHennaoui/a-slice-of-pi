@@ -1,1 +1,0 @@
-export const MAX_TAILWIND_SPACING_STEP = 24;

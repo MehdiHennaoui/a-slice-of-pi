@@ -18,7 +18,7 @@ type ObjectSentimentCount = Record<
 	}
 >;
 
-const reviewData = rawReviewData as ReviewData[];
+export const reviewData = rawReviewData as ReviewData[];
 export const reviewsBySentimentThisYear =
 	countReviewsBySentimentThisYear(reviewData);
 
