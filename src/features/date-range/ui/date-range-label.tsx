@@ -35,9 +35,8 @@ export function DateRangeLabel({ className }: { className?: string }) {
 					</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<div className="flex items-center gap-2">
+					<div className="flex flex-col gap-2">
 						<DateRangePicker
-							className="min-w-0 flex-1"
 							value={range}
 							label={label}
 							onChange={(selected) => {
@@ -47,12 +46,13 @@ export function DateRangeLabel({ className }: { className?: string }) {
 						<Button
 							type="button"
 							variant="outline"
-							size="icon-lg"
+							size="lg"
+							className="w-full"
 							disabled={isDefault}
-							aria-label={copy.resetAriaLabel}
 							onClick={() => setRange(yearDateRange(CURRENT_YEAR))}
 						>
-							<RotateCcwIcon />
+							<RotateCcwIcon data-icon="inline-start" />
+							{copy.reset}
 						</Button>
 					</div>
 				</CardContent>
