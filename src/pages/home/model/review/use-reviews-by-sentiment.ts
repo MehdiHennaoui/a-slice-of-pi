@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 
-import { useDateRange } from "@/features/date-range";
 import { isDateWithinRange } from "@/shared/lib/date";
 
+import { useChoosePeriod } from "../choose-period/use-choose-period";
 import { countReviewsBySentiment, reviewData } from "./review";
 
 export function useReviewsBySentiment() {
-	const { range } = useDateRange();
+	const { range } = useChoosePeriod();
 	const to = range.to ?? range.from;
 
 	return useMemo(

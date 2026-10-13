@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 
-import { useDateRange } from "@/features/date-range";
 import { isDateWithinRange } from "@/shared/lib/date";
 
+import { useChoosePeriod } from "../choose-period/use-choose-period";
 import type { PizzaSize } from "../pricing/pricing";
 import {
 	countOrdersByStore,
@@ -15,7 +15,7 @@ export function useOrdersByStore(
 	pizzaType: PizzaType | "all",
 	pizzaSize: PizzaSize | "all",
 ) {
-	const { range } = useDateRange();
+	const { range } = useChoosePeriod();
 	const to = range.to ?? range.from;
 
 	return useMemo(() => {

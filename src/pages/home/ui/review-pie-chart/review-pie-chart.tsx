@@ -1,6 +1,5 @@
 import { StarIcon } from "lucide-react";
 import { LabelList, Pie, PieChart } from "recharts";
-import { useDateRange } from "@/features/date-range";
 import {
 	Card,
 	CardContent,
@@ -16,6 +15,7 @@ import {
 } from "@/shared/components/ui/chart";
 import { DataGuard } from "@/shared/components/ui/data-guard/data-guard";
 import { formatDateRange } from "@/shared/lib/date";
+import { useChoosePeriod } from "../../model/choose-period/use-choose-period";
 import { useReviewsBySentiment } from "../../model/review/use-reviews-by-sentiment";
 import { chartConfig } from "./chart-config";
 import { reviewText } from "./review-text";
@@ -23,7 +23,7 @@ import { reviewText } from "./review-text";
 const copy = reviewText["review-chart"];
 
 export function ReviewPieChart({ className }: { className?: string }) {
-	const { range } = useDateRange();
+	const { range } = useChoosePeriod();
 	const period = formatDateRange(range.from, range.to ?? range.from);
 	const reviewsBySentiment = useReviewsBySentiment();
 
