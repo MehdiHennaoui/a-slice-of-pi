@@ -64,9 +64,7 @@ test.describe("choose period", () => {
 		await expectSectionTitle(page, choosePeriodTitle());
 
 		await expect(periodTrigger(page, defaultLabel)).toBeVisible();
-		await expect(
-			page.getByRole("button", { name: copy.reset }),
-		).toBeDisabled();
+		await expect(page.getByRole("button", { name: copy.reset })).toBeDisabled();
 
 		await expectSectionTitle(page, orderByStoreTitle());
 		await expectSectionTitle(page, reviewChartTitle());
@@ -88,10 +86,7 @@ test.describe("choose period", () => {
 		await expect(periodTrigger(page, populatedLabel)).toBeVisible();
 		await expect(page.getByRole("button", { name: copy.reset })).toBeEnabled();
 
-		await expectSectionTitle(
-			page,
-			`${orderCopy.title} ${populatedLabel}`,
-		);
+		await expectSectionTitle(page, `${orderCopy.title} ${populatedLabel}`);
 		await expectSectionTitle(
 			page,
 			`${reviewCopy.title} ${populatedLabel} ${reviewCopy.titleSuffix}`,
@@ -162,10 +157,7 @@ test.describe("choose period", () => {
 
 		await selectPeriod(page, easyFrom, easyTo);
 
-		const orderSection = chartSection(
-			page,
-			`${orderCopy.title} ${easyLabel}`,
-		);
+		const orderSection = chartSection(page, `${orderCopy.title} ${easyLabel}`);
 		const reviewSection = chartSection(
 			page,
 			`${reviewCopy.title} ${easyLabel} ${reviewCopy.titleSuffix}`,
@@ -196,7 +188,9 @@ test.describe("choose period", () => {
 		await expect(
 			orderSection.getByText(orderCopy.stores.kanata, { exact: true }),
 		).toBeVisible();
-		await orderSection.locator(".recharts-bar-rectangle").hover({ force: true });
+		await orderSection
+			.locator(".recharts-bar-rectangle")
+			.hover({ force: true });
 		await expect(
 			orderSection
 				.locator(".recharts-tooltip-wrapper")
@@ -270,9 +264,7 @@ function expectedOrderStores(from: Date, to: Date) {
 
 function expectedReviewSentiments(from: Date, to: Date) {
 	return countReviewsBySentiment(
-		fixtureReviews.filter((review) =>
-			isDateWithinRange(review.date, from, to),
-		),
+		fixtureReviews.filter((review) => isDateWithinRange(review.date, from, to)),
 	);
 }
 
