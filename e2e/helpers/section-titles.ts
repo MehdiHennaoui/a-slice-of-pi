@@ -1,6 +1,7 @@
 import { expect, type Page } from "@playwright/test";
 
 import { appText } from "../../src/app/app-text";
+import { choosePeriodText } from "../../src/pages/home/ui/choose-period/choose-period-text";
 import { monthlyRevenueText } from "../../src/pages/home/ui/monthly-revenue-text";
 import { orderByStoreText } from "../../src/pages/home/ui/order-by-store-bar-chart/order-by-store-text";
 import { reviewText } from "../../src/pages/home/ui/review-pie-chart/review-text";
@@ -12,9 +13,17 @@ export function appBrandTitle() {
 	return appText["app-header"].brand;
 }
 
+export function choosePeriodTitle() {
+	return choosePeriodText["choose-period"].title;
+}
+
+export function periodLabel(from: Date, to: Date) {
+	return formatDateRange(from, to);
+}
+
 function defaultPeriodLabel(year = CURRENT_YEAR) {
 	const { from, to } = yearDateRange(year);
-	return formatDateRange(from, to);
+	return periodLabel(from, to);
 }
 
 export function yearlyRevenueTitle(year = CURRENT_YEAR) {
