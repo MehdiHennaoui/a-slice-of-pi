@@ -6,6 +6,7 @@ Pizza shop analytics dashboard built with React. It turns order, pricing, and re
 
 ## Table of contents
 
+- [Goals](#goals)
 - [Stack](#stack)
 - [Prerequisites](#prerequisites)
 - [Getting started](#getting-started)
@@ -13,6 +14,15 @@ Pizza shop analytics dashboard built with React. It turns order, pricing, and re
   - [What FSD is](#what-fsd-is)
   - [How it’s used here](#how-its-used-here)
 - [Scripts](#scripts)
+
+## Goals
+
+- [x] **Goal 1** — Show a simple pie chart of the customer reviews, showing how many reviews of each sentiment (happy, sad, etc.) A Slice of Pi received in 2026.
+- [x] **Goal 2** — Add a simple bar chart showing how many orders were placed in each store (Kanata, Orleans, etc.).
+- [x] **Goal 3** — Add a display of the total money made in 2026 by computing the price of each pizza sold and adding them all.
+- [x] **Goal 4** — Create a line chart showing how much money was made per month in 2026.
+- [x] **Goal 5** — To the chart from Goal 2, add the ability to filter the data by pizza type and pizza size.
+- [x] **Goal 6** — Add a start and end date filter at the top of the page, and filter the charts from goals 1, 2, and 4 by these start and end dates.
 
 ## Stack
 
