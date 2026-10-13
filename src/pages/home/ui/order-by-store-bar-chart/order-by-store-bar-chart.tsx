@@ -5,7 +5,7 @@ import {
 	RulerDimensionLineIcon,
 	StoreIcon,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
 	Bar,
 	BarChart,
@@ -14,6 +14,7 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
+import { useDateRange } from "@/features/date-range";
 import { Button } from "@/shared/components/ui/button";
 import {
 	Card,
@@ -27,14 +28,10 @@ import {
 	ChartTooltipContent,
 } from "@/shared/components/ui/chart";
 import { FieldGroup } from "@/shared/components/ui/field";
-import { CURRENT_YEAR } from "@/shared/config";
+import { formatDateRange } from "@/shared/lib/date";
 import { tailwindSpacingToPx } from "@/shared/lib/tailwind-spacing";
-import {
-	countOrdersByStore,
-	filterOrdersByPizzaTypeOrSize,
-	orderDataArray,
-	type PizzaType,
-} from "../../model/order/order";
+import type { PizzaType } from "../../model/order/order";
+import { useOrdersByStore } from "../../model/order/use-orders-by-store";
 import type { PizzaSize } from "../../model/pricing/pricing";
 import {
 	chartConfig,
@@ -52,15 +49,9 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 		"all",
 	);
 
-	const orderCountByStore = useMemo(() => {
-		return countOrdersByStore(
-			filterOrdersByPizzaTypeOrSize(
-				orderDataArray,
-				pizzaSelected,
-				pizzaSizeSelected,
-			),
-		);
-	}, [pizzaSelected, pizzaSizeSelected]);
+	const { range } = useDateRange();
+	const period = formatDateRange(range.from, range.to ?? range.from);
+	const orderCountByStore = useOrdersByStore(pizzaSelected, pizzaSizeSelected);
 
 	const hasActiveFilters =
 		pizzaSelected !== "all" || pizzaSizeSelected !== "all";
@@ -77,7 +68,7 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 					<CardTitle>
 						<StoreIcon />{" "}
 						<h1>
-							{copy.title} {CURRENT_YEAR}
+							{copy.title} {period}
 						</h1>
 					</CardTitle>
 				</CardHeader>

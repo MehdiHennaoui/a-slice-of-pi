@@ -1,6 +1,7 @@
 import { ChartLineIcon } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
-import { revenueByMonth } from "@/pages/home/model/revenue/revenue-by-month";
+import { useDateRange } from "@/features/date-range";
+import { useRevenueByMonth } from "@/pages/home/model/revenue/use-revenue-by-month";
 import {
 	Card,
 	CardContent,
@@ -13,7 +14,7 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/shared/components/ui/chart";
-import { CURRENT_YEAR } from "@/shared/config";
+import { formatDateRange } from "@/shared/lib/date";
 import { tailwindSpacingToPx } from "@/shared/lib/tailwind-spacing";
 import { monthlyRevenueText } from "./monthly-revenue-text";
 
@@ -27,6 +28,10 @@ const chartConfig: ChartConfig = {
 };
 
 export function MonthlyRevenueLineChart({ className }: { className?: string }) {
+	const { range } = useDateRange();
+	const period = formatDateRange(range.from, range.to ?? range.from);
+	const revenueByMonth = useRevenueByMonth();
+
 	return (
 		<section className={className}>
 			<Card className="flex h-full flex-col">
@@ -34,7 +39,7 @@ export function MonthlyRevenueLineChart({ className }: { className?: string }) {
 					<CardTitle>
 						<ChartLineIcon />
 						<h1>
-							{copy.title} {CURRENT_YEAR}
+							{copy.title} {period}
 						</h1>
 					</CardTitle>
 				</CardHeader>
