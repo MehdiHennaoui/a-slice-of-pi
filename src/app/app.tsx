@@ -1,5 +1,8 @@
 import { PizzaIcon } from "lucide-react";
 import { Home } from "@/pages/home/home";
+import { appText } from "./app-text";
+
+const copy = appText["app-header"];
 
 export function App() {
 	return (
@@ -10,9 +13,9 @@ export function App() {
 						<PizzaIcon className="size-4" />
 					</span>
 					<h1 className="font-heading font-semibold text-sm">
-						A Slice of Pi
+						{copy.brand}
 						<span className="block text-muted-foreground text-xs">
-							Dashboard
+							{copy.subtitle}
 						</span>
 					</h1>
 				</div>

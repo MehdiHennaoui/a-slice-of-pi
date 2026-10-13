@@ -7,6 +7,9 @@ import {
 } from "@/shared/components/ui/card";
 import { CURRENT_YEAR } from "@/shared/config";
 import { totalMoneyForOneYear } from "../model/revenue/yearly-revenue";
+import { yearlyRevenueText } from "./yearly-revenue-text";
+
+const copy = yearlyRevenueText["yearly-revenue"];
 
 export function YearlyRevenue({ className }: { className?: string }) {
 	return (
@@ -15,7 +18,9 @@ export function YearlyRevenue({ className }: { className?: string }) {
 				<CardHeader>
 					<CardTitle>
 						<BadgeDollarSignIcon />
-						<h1>Yearly Revenue for {CURRENT_YEAR}</h1>
+						<h1>
+							{copy.title} {CURRENT_YEAR}
+						</h1>
 					</CardTitle>
 				</CardHeader>
 				<CardContent>

@@ -10,19 +10,15 @@ import {
 	PIZZA_FILTER_OPTIONS,
 	PIZZA_SIZE_FILTER_OPTIONS,
 } from "../src/pages/home/ui/order-by-store-bar-chart/chart-config";
-import { CURRENT_YEAR } from "../src/shared/config";
+import { orderByStoreText } from "../src/pages/home/ui/order-by-store-bar-chart/order-by-store-text";
 import orderDataFixture from "./fixtures/order-data.json" with { type: "json" };
+import {
+	expectSectionTitle,
+	orderByStoreTitle,
+} from "./helpers/section-titles";
 
-const STORE_LABEL_BY_SLUG: Record<string, string> = {
-	kanata: "Kanata",
-	orleans: "Orleans",
-	downtown: "Downtown",
-	"sandy-hill": "Sandy Hill",
-	"the-glebe": "The Glebe",
-};
-
-const STORE_LABELS = Object.values(STORE_LABEL_BY_SLUG);
-const orderByStoreHeading = `Order by Store for ${CURRENT_YEAR}`;
+const copy = orderByStoreText["order-by-store-chart"];
+const STORE_LABELS = Object.values(copy.stores);
 
 type OrderData = Parameters<typeof filterOrdersByPizzaTypeOrSize>[0];
 const fixtureOrders = orderDataFixture as OrderData;
@@ -35,15 +31,13 @@ test.describe("order by store filters", () => {
 	test("shows fixture stores and default counts before filtering", async ({
 		page,
 	}) => {
-		await expect(
-			page.getByRole("heading", { name: orderByStoreHeading }),
-		).toHaveText(orderByStoreHeading);
+		await expectSectionTitle(page, orderByStoreTitle());
 
 		await expect(
-			page.getByRole("heading", { name: "Filters" }),
+			page.getByRole("heading", { name: copy.filters.heading }),
 		).toBeVisible();
 		await expect(
-			page.getByRole("button", { name: "Reset filters" }),
+			page.getByRole("button", { name: copy.filters.reset }),
 		).toBeDisabled();
 
 		await expect(page.getByRole("combobox").nth(0)).toContainText(
@@ -63,7 +57,7 @@ test.describe("order by store filters", () => {
 
 		await expect(page.getByRole("combobox").nth(0)).toContainText(pizzaType);
 		await expect(
-			page.getByRole("button", { name: "Reset filters" }),
+			page.getByRole("button", { name: copy.filters.reset }),
 		).toBeEnabled();
 
 		await expectChartState(page, pizzaType, "all");
@@ -98,13 +92,13 @@ test.describe("order by store filters", () => {
 		await selectFilter(page, 1, pizzaSize);
 
 		await expect(page.locator(".recharts-bar-rectangle")).toHaveCount(0);
-		await expect(
-			page.getByText("No orders found for the selected filters"),
-		).toBeVisible();
+		await expect(page.getByText(copy.filters.empty)).toBeVisible();
 	});
 
 	test("resets filters and restores the default chart", async ({ page }) => {
-		const resetButton = page.getByRole("button", { name: "Reset filters" });
+		const resetButton = page.getByRole("button", {
+			name: copy.filters.reset,
+		});
 		const pizzaType = PIZZA_FILTER_OPTIONS[5];
 		const pizzaSize = PIZZA_SIZE_FILTER_OPTIONS[3];
 
@@ -131,7 +125,7 @@ function expectedChartState(
 ) {
 	return countOrdersByStore(
 		filterOrdersByPizzaTypeOrSize(fixtureOrders, pizzaType, pizzaSize),
-	).map((entry) => STORE_LABEL_BY_SLUG[entry.store] ?? entry.store);
+	).map((entry) => copy.stores[entry.store as keyof typeof copy.stores] ?? entry.store);
 }
 
 async function selectFilter(

@@ -15,10 +15,13 @@ import {
 } from "@/shared/components/ui/chart";
 import { CURRENT_YEAR } from "@/shared/config";
 import { tailwindSpacingToPx } from "@/shared/lib/tailwind-spacing";
+import { monthlyRevenueText } from "./monthly-revenue-text";
+
+const copy = monthlyRevenueText["monthly-revenue-chart"];
 
 const chartConfig: ChartConfig = {
 	total: {
-		label: "Revenue",
+		label: copy.seriesLabel,
 		color: "var(--chart-1)",
 	},
 };
@@ -30,7 +33,9 @@ export function MonthlyRevenueLineChart({ className }: { className?: string }) {
 				<CardHeader className="shrink-0">
 					<CardTitle>
 						<ChartLineIcon />
-						<h1>Monthly Revenue for {CURRENT_YEAR}</h1>
+						<h1>
+							{copy.title} {CURRENT_YEAR}
+						</h1>
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="flex flex-1 flex-col">
