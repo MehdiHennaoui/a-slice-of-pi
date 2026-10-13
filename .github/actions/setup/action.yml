@@ -4,7 +4,7 @@ description: Install pnpm, Node, and project dependencies
 runs:
   using: composite
   steps:
-    - uses: pnpm/action-setup@v4
+    - uses: pnpm/action-setup@v6
       with:
         version: 9
     - uses: actions/setup-node@v4
