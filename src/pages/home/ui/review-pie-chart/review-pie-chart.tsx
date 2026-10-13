@@ -14,6 +14,7 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/shared/components/ui/chart";
+import { DataGuard } from "@/shared/components/ui/data-guard/data-guard";
 import { formatDateRange } from "@/shared/lib/date";
 import { useReviewsBySentiment } from "../../model/review/use-reviews-by-sentiment";
 import { chartConfig } from "./chart-config";
@@ -38,36 +39,38 @@ export function ReviewPieChart({ className }: { className?: string }) {
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="flex min-h-0 flex-1 flex-col">
-					<ChartContainer
-						config={chartConfig}
-						className="mx-auto aspect-square h-full max-h-full min-h-72 w-auto lg:min-h-0"
-					>
-						<PieChart accessibilityLayer>
-							<ChartTooltip
-								content={
-									<ChartTooltipContent
-										indicator="line"
-										labelKey="sentiment"
-										nameKey="count"
-										className="min-w-40"
-									/>
-								}
-							/>
-							<Pie
-								data={reviewsBySentiment}
-								dataKey="count"
-								nameKey="sentiment"
-							>
-								<LabelList
-									dataKey="count"
-									className="fill-background text-sm"
+					<DataGuard data={reviewsBySentiment}>
+						<ChartContainer
+							config={chartConfig}
+							className="mx-auto aspect-square h-full max-h-full min-h-72 w-auto lg:min-h-0"
+						>
+							<PieChart accessibilityLayer>
+								<ChartTooltip
+									content={
+										<ChartTooltipContent
+											indicator="line"
+											labelKey="sentiment"
+											nameKey="count"
+											className="min-w-40"
+										/>
+									}
 								/>
-							</Pie>
-							<ChartLegend
-								content={<ChartLegendContent nameKey="sentiment" />}
-							/>
-						</PieChart>
-					</ChartContainer>
+								<Pie
+									data={reviewsBySentiment}
+									dataKey="count"
+									nameKey="sentiment"
+								>
+									<LabelList
+										dataKey="count"
+										className="fill-background text-sm"
+									/>
+								</Pie>
+								<ChartLegend
+									content={<ChartLegendContent nameKey="sentiment" />}
+								/>
+							</PieChart>
+						</ChartContainer>
+					</DataGuard>
 				</CardContent>
 			</Card>
 		</section>

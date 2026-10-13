@@ -11,6 +11,7 @@ import {
 	PIZZA_SIZE_FILTER_OPTIONS,
 } from "../src/pages/home/ui/order-by-store-bar-chart/chart-config";
 import { orderByStoreText } from "../src/pages/home/ui/order-by-store-bar-chart/order-by-store-text";
+import { dataGuardText } from "../src/shared/components/ui/data-guard/data-guard-text";
 import orderDataFixture from "./fixtures/order-data.json" with { type: "json" };
 import {
 	expectSectionTitle,
@@ -18,6 +19,7 @@ import {
 } from "./helpers/section-titles";
 
 const copy = orderByStoreText["order-by-store-chart"];
+const dataGuardCopy = dataGuardText["data-guard"];
 const STORE_LABELS = Object.values(copy.stores);
 
 type OrderData = Parameters<typeof filterOrdersByPizzaTypeOrSize>[0];
@@ -92,7 +94,7 @@ test.describe("order by store filters", () => {
 		await selectFilter(page, 1, pizzaSize);
 
 		await expect(page.locator(".recharts-bar-rectangle")).toHaveCount(0);
-		await expect(page.getByText(copy.filters.empty)).toBeVisible();
+		await expect(page.getByText(dataGuardCopy.empty)).toBeVisible();
 	});
 
 	test("resets filters and restores the default chart", async ({ page }) => {
