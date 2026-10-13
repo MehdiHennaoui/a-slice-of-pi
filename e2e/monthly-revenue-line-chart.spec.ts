@@ -4,10 +4,13 @@ import type { OrderDataType } from "../src/pages/home/model/order/order";
 import { getRevenueByMonth } from "../src/pages/home/model/revenue/revenue-by-month";
 import { CURRENT_YEAR } from "../src/shared/config";
 import orderDataFixture from "./fixtures/order-data.json" with { type: "json" };
+import {
+	expectSectionTitle,
+	monthlyRevenueTitle,
+} from "./helpers/section-titles";
 
 const fixtureOrders = orderDataFixture as OrderDataType[];
 const expectedRevenueByMonth = getRevenueByMonth(fixtureOrders);
-const monthlyRevenueHeading = `Monthly Revenue for ${CURRENT_YEAR}`;
 
 test.describe("monthly revenue line chart", () => {
 	test.beforeEach(async ({ page }) => {
@@ -15,15 +18,11 @@ test.describe("monthly revenue line chart", () => {
 	});
 
 	test("shows the heading with the expected text", async ({ page }) => {
-		await expect(
-			page.getByRole("heading", { name: monthlyRevenueHeading }),
-		).toHaveText(monthlyRevenueHeading);
+		await expectSectionTitle(page, monthlyRevenueTitle());
 	});
 
 	test("shows fixture month labels on the chart", async ({ page }) => {
-		await expect(
-			page.getByRole("heading", { name: monthlyRevenueHeading }),
-		).toHaveText(monthlyRevenueHeading);
+		await expectSectionTitle(page, monthlyRevenueTitle());
 
 		for (const { month } of expectedRevenueByMonth) {
 			await expect(page.getByText(month, { exact: true })).toBeVisible();
@@ -31,9 +30,7 @@ test.describe("monthly revenue line chart", () => {
 	});
 
 	test("ignores fixture orders outside the current year", async ({ page }) => {
-		await expect(
-			page.getByRole("heading", { name: monthlyRevenueHeading }),
-		).toHaveText(monthlyRevenueHeading);
+		await expectSectionTitle(page, monthlyRevenueTitle());
 
 		expect(
 			getRevenueByMonth(

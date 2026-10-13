@@ -41,7 +41,10 @@ import {
 	PIZZA_FILTER_OPTIONS,
 	PIZZA_SIZE_FILTER_OPTIONS,
 } from "./chart-config";
+import { orderByStoreText } from "./order-by-store-text";
 import { SelectFilter } from "./select-filter";
+
+const copy = orderByStoreText["order-by-store-chart"];
 
 export function OrderByStoreBarChart({ className }: { className?: string }) {
 	const [pizzaSelected, setPizzaSelected] = useState<PizzaType | "all">("all");
@@ -72,7 +75,10 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 			<Card className="flex h-full flex-col">
 				<CardHeader className="shrink-0">
 					<CardTitle>
-						<StoreIcon /> <h1>Order by Store for {CURRENT_YEAR}</h1>
+						<StoreIcon />{" "}
+						<h1>
+							{copy.title} {CURRENT_YEAR}
+						</h1>
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="flex min-h-0 flex-1 flex-col gap-2 lg:flex-row">
@@ -80,28 +86,28 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 						<div className="rounded-xl border border-border/70 bg-muted/35 p-3">
 							<h2 className="mb-3 flex items-center gap-1.5 font-medium text-foreground text-sm">
 								<ListFilterIcon className="size-3.5 text-muted-foreground" />
-								Filters
+								{copy.filters.heading}
 							</h2>
 							<FieldGroup className="gap-3">
 								<SelectFilter
-									label="Pizza"
+									label={copy.filters.pizzaLabel}
 									icon={
 										<PizzaIcon className="size-3.5 text-muted-foreground" />
 									}
 									value={pizzaSelected}
 									options={PIZZA_FILTER_OPTIONS}
-									placeholder="for example: Margherita"
+									placeholder={copy.filters.pizzaPlaceholder}
 									onValueChange={setPizzaSelected}
 									className="w-full"
 								/>
 								<SelectFilter
-									label="Size"
+									label={copy.filters.sizeLabel}
 									icon={
 										<RulerDimensionLineIcon className="size-3.5 text-muted-foreground" />
 									}
 									value={pizzaSizeSelected}
 									options={PIZZA_SIZE_FILTER_OPTIONS}
-									placeholder="for example: S"
+									placeholder={copy.filters.sizePlaceholder}
 									onValueChange={setPizzaSizeSelected}
 									className="w-full"
 								/>
@@ -112,7 +118,7 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 									onClick={handleResetFilters}
 								>
 									<RotateCcwIcon data-icon="inline-start" />
-									Reset filters
+									{copy.filters.reset}
 								</Button>
 							</FieldGroup>
 						</div>
@@ -159,7 +165,7 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 							</ChartContainer>
 						) : (
 							<div className="flex h-full min-h-40 items-center justify-center rounded-lg border border-border/80 border-dashed bg-muted/20 px-4 text-center text-muted-foreground text-sm">
-								No orders found for the selected filters
+								{copy.filters.empty}
 							</div>
 						)}
 					</div>

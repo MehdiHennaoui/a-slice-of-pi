@@ -1,14 +1,18 @@
 import { expect, test } from "@playwright/test";
 
 import { countReviewsBySentimentThisYear } from "../src/pages/home/model/review/review";
-import { chartConfig } from "../src/pages/home/ui/review-pie-chart/chart-config";
+import { reviewText } from "../src/pages/home/ui/review-pie-chart/review-text";
 import { CURRENT_YEAR } from "../src/shared/config";
 import reviewDataFixture from "./fixtures/review-data.json" with { type: "json" };
+import {
+	expectSectionTitle,
+	reviewChartTitle,
+} from "./helpers/section-titles";
 
 type ReviewData = Parameters<typeof countReviewsBySentimentThisYear>[0];
 const fixtureReviews = reviewDataFixture as ReviewData;
 const expectedSentiments = countReviewsBySentimentThisYear(fixtureReviews);
-const reviewHeading = `Reviews ${CURRENT_YEAR} by sentiment`;
+const copy = reviewText["review-chart"];
 
 test.describe("review pie chart", () => {
 	test.beforeEach(async ({ page }) => {
@@ -16,19 +20,15 @@ test.describe("review pie chart", () => {
 	});
 
 	test("shows the heading with the expected text", async ({ page }) => {
-		await expect(
-			page.getByRole("heading", { name: reviewHeading }),
-		).toHaveText(reviewHeading);
+		await expectSectionTitle(page, reviewChartTitle());
 	});
 
 	test("shows legend labels for each fixture sentiment", async ({ page }) => {
-		await expect(
-			page.getByRole("heading", { name: reviewHeading }),
-		).toHaveText(reviewHeading);
+		await expectSectionTitle(page, reviewChartTitle());
 
 		for (const { sentiment } of expectedSentiments) {
 			await expect(
-				page.getByText(chartConfig[sentiment].label, { exact: true }),
+				page.getByText(copy.legend[sentiment], { exact: true }),
 			).toBeVisible();
 		}
 	});
@@ -36,9 +36,7 @@ test.describe("review pie chart", () => {
 	test("ignores fixture reviews outside the current year", async ({
 		page,
 	}) => {
-		await expect(
-			page.getByRole("heading", { name: reviewHeading }),
-		).toHaveText(reviewHeading);
+		await expectSectionTitle(page, reviewChartTitle());
 
 		expect(
 			countReviewsBySentimentThisYear(
@@ -49,7 +47,7 @@ test.describe("review pie chart", () => {
 		).toEqual([]);
 
 		await expect(
-			page.getByText(chartConfig.angry.label, { exact: true }),
+			page.getByText(copy.legend.angry, { exact: true }),
 		).toHaveCount(0);
 	});
 });

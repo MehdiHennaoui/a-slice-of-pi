@@ -16,6 +16,9 @@ import {
 import { CURRENT_YEAR } from "@/shared/config";
 import { reviewsBySentimentThisYear } from "../../model/review/review";
 import { chartConfig } from "./chart-config";
+import { reviewText } from "./review-text";
+
+const copy = reviewText["review-chart"];
 
 export function ReviewPieChart({ className }: { className?: string }) {
 	return (
@@ -23,7 +26,10 @@ export function ReviewPieChart({ className }: { className?: string }) {
 			<Card className="flex h-full min-h-0 flex-col">
 				<CardHeader className="shrink-0">
 					<CardTitle>
-						<StarIcon /> <h1>Reviews {CURRENT_YEAR} by sentiment</h1>
+						<StarIcon />{" "}
+						<h1>
+							{copy.title} {CURRENT_YEAR} {copy.titleSuffix}
+						</h1>
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="flex min-h-0 flex-1 flex-col">
