@@ -1,2 +1,2 @@
-export { DateRangeProvider, useDateRange } from "./model/date-range";
-export { DateRangePicker } from "./ui/date-range-picker";
+export { DateRangeProvider, useDateRange } from "./model/use-date-range";
+export { DateRangeLabel } from "./ui/date-range-label";
