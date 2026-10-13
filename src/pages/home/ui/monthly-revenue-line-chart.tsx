@@ -14,6 +14,7 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/shared/components/ui/chart";
+import { DataGuard } from "@/shared/components/ui/data-guard/data-guard";
 import { formatDateRange } from "@/shared/lib/date";
 import { tailwindSpacingToPx } from "@/shared/lib/tailwind-spacing";
 import { monthlyRevenueText } from "./monthly-revenue-text";
@@ -44,39 +45,44 @@ export function MonthlyRevenueLineChart({ className }: { className?: string }) {
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="flex flex-1 flex-col">
-					<ChartContainer
-						config={chartConfig}
-						className="aspect-auto! h-full min-h-72 w-full lg:min-h-0"
-					>
-						<LineChart accessibilityLayer data={revenueByMonth}>
-							<CartesianGrid vertical={false} strokeDasharray="3 3" />
-							<Line
-								type="monotone"
-								dataKey="total"
-								strokeWidth={2.5}
-								stroke="var(--chart-1)"
-								dot={{ r: 3, fill: "var(--chart-1)" }}
-								activeDot={{ r: 5 }}
-							/>
-							<XAxis
-								dataKey="month"
-								padding={{
-									left: tailwindSpacingToPx(2),
-									right: tailwindSpacingToPx(2),
-								}}
-							/>
-							<YAxis dataKey="total" tickFormatter={(value) => `${value} $`} />
-							<ChartTooltip
-								cursor={false}
-								content={
-									<ChartTooltipContent
-										indicator="line"
-										formatter={(value) => `${value} $`}
-									/>
-								}
-							/>
-						</LineChart>
-					</ChartContainer>
+					<DataGuard data={revenueByMonth}>
+						<ChartContainer
+							config={chartConfig}
+							className="aspect-auto! h-full min-h-72 w-full lg:min-h-0"
+						>
+							<LineChart accessibilityLayer data={revenueByMonth}>
+								<CartesianGrid vertical={false} strokeDasharray="3 3" />
+								<Line
+									type="monotone"
+									dataKey="total"
+									strokeWidth={2.5}
+									stroke="var(--chart-1)"
+									dot={{ r: 3, fill: "var(--chart-1)" }}
+									activeDot={{ r: 5 }}
+								/>
+								<XAxis
+									dataKey="month"
+									padding={{
+										left: tailwindSpacingToPx(2),
+										right: tailwindSpacingToPx(2),
+									}}
+								/>
+								<YAxis
+									dataKey="total"
+									tickFormatter={(value) => `${value} $`}
+								/>
+								<ChartTooltip
+									cursor={false}
+									content={
+										<ChartTooltipContent
+											indicator="line"
+											formatter={(value) => `${value} $`}
+										/>
+									}
+								/>
+							</LineChart>
+						</ChartContainer>
+					</DataGuard>
 				</CardContent>
 			</Card>
 		</section>

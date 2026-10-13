@@ -16,7 +16,6 @@ export const orderByStoreText = {
 			pizzaPlaceholder: "for example: Margherita",
 			sizePlaceholder: "for example: S",
 			reset: "Reset filters",
-			empty: "No orders found for the selected filters",
 		},
 	},
 } as const;

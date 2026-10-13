@@ -27,6 +27,7 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/shared/components/ui/chart";
+import { DataGuard } from "@/shared/components/ui/data-guard/data-guard";
 import { FieldGroup } from "@/shared/components/ui/field";
 import { formatDateRange } from "@/shared/lib/date";
 import { tailwindSpacingToPx } from "@/shared/lib/tailwind-spacing";
@@ -115,7 +116,7 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 						</div>
 					</aside>
 					<div className="flex min-h-0 min-w-0 flex-1 flex-col">
-						{orderCountByStore.length > 0 ? (
+						<DataGuard data={orderCountByStore}>
 							<ChartContainer
 								config={chartConfig}
 								className="aspect-auto! h-full min-h-72 w-full lg:min-h-0"
@@ -154,11 +155,7 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 									<YAxis dataKey="order_count" />
 								</BarChart>
 							</ChartContainer>
-						) : (
-							<div className="flex h-full min-h-40 items-center justify-center rounded-lg border border-border/80 border-dashed bg-muted/20 px-4 text-center text-muted-foreground text-sm">
-								{copy.filters.empty}
-							</div>
-						)}
+						</DataGuard>
 					</div>
 				</CardContent>
 			</Card>
