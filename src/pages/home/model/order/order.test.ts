@@ -113,11 +113,7 @@ describe("filterOrdersByPizzaTypeOrSize", () => {
 	});
 
 	it("keeps an order only when one item matches both type and size", () => {
-		const matching = filterOrdersByPizzaTypeOrSize(
-			filterOrders,
-			"Cheese",
-			"S",
-		);
+		const matching = filterOrdersByPizzaTypeOrSize(filterOrders, "Cheese", "S");
 		const splitAcrossItems = filterOrdersByPizzaTypeOrSize(
 			filterOrders,
 			"Pepperoni",

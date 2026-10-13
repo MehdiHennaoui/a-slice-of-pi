@@ -3,11 +3,10 @@ import { expect, test } from "@playwright/test";
 import { countReviewsBySentimentThisYear } from "../src/pages/home/model/review/review";
 import { reviewText } from "../src/pages/home/ui/review-pie-chart/review-text";
 import { CURRENT_YEAR } from "../src/shared/config";
-import reviewDataFixture from "./fixtures/review-data.json" with { type: "json" };
-import {
-	expectSectionTitle,
-	reviewChartTitle,
-} from "./helpers/section-titles";
+import reviewDataFixture from "./fixtures/review-data.json" with {
+	type: "json",
+};
+import { expectSectionTitle, reviewChartTitle } from "./helpers/section-titles";
 
 type ReviewData = Parameters<typeof countReviewsBySentimentThisYear>[0];
 const fixtureReviews = reviewDataFixture as ReviewData;
@@ -33,9 +32,7 @@ test.describe("review pie chart", () => {
 		}
 	});
 
-	test("ignores fixture reviews outside the current year", async ({
-		page,
-	}) => {
+	test("ignores fixture reviews outside the current year", async ({ page }) => {
 		await expectSectionTitle(page, reviewChartTitle());
 
 		expect(

@@ -125,7 +125,10 @@ function expectedChartState(
 ) {
 	return countOrdersByStore(
 		filterOrdersByPizzaTypeOrSize(fixtureOrders, pizzaType, pizzaSize),
-	).map((entry) => copy.stores[entry.store as keyof typeof copy.stores] ?? entry.store);
+	).map(
+		(entry) =>
+			copy.stores[entry.store as keyof typeof copy.stores] ?? entry.store,
+	);
 }
 
 async function selectFilter(
