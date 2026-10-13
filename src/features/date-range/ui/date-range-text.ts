@@ -1,6 +1,6 @@
 export const dateRangeText = {
 	"date-range-label": {
 		title: "Choose a period",
-		resetAriaLabel: "Reset period",
+		reset: "Reset period",
 	},
 } as const;
