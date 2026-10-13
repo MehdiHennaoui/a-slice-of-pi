@@ -152,7 +152,7 @@ export function OrderByStoreBarChart({ className }: { className?: string }) {
 											)
 										}
 									/>
-									<YAxis dataKey="order_count" />
+									<YAxis dataKey="order_count" allowDecimals={false} />
 								</BarChart>
 							</ChartContainer>
 						</DataGuard>
