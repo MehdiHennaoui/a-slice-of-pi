@@ -50,10 +50,11 @@ const fakeOrders = [
 ] as Parameters<typeof getRevenueByMonth>[0];
 
 describe("getRevenueByMonth", () => {
-	it("groups pizza totals by month for the current year", () => {
+	it("groups pizza totals by month for the given orders", () => {
 		expect(getRevenueByMonth(fakeOrders)).toEqual([
 			{ month: "January", total: 12 }, // Cheese M
 			{ month: "March", total: 24 }, // Cheese S (8) + Meatlovers M (16)
+			{ month: "May", total: 10 }, // Hawaiian S (2023)
 			{ month: "July", total: 34 }, // Pepperoni M (14) + Deluxe L (20)
 			{ month: "November", total: 0 }, // empty items
 		]);
@@ -78,14 +79,6 @@ describe("getRevenueByMonth", () => {
 		expect(getRevenueByMonth(sameMonthOrders)).toEqual([
 			{ month: "June", total: 22 },
 		]);
-	});
-
-	it("ignores orders outside the current year", () => {
-		const olderOrders = fakeOrders.filter(
-			(order) => !order.date.startsWith("2024"),
-		);
-
-		expect(getRevenueByMonth(olderOrders)).toEqual([]);
 	});
 
 	it("returns an empty array for an empty input", () => {

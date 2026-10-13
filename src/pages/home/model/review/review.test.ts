@@ -1,10 +1,6 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
-vi.mock("@/shared/config", () => ({
-	CURRENT_YEAR: 2024,
-}));
-
-import { countReviewsBySentimentThisYear } from "./review";
+import { countReviewsBySentiment } from "./review";
 
 const fakeReviews = [
 	{
@@ -42,28 +38,21 @@ const fakeReviews = [
 		date: "2022-01-01",
 		message: "Perfect",
 	},
-] as Parameters<typeof countReviewsBySentimentThisYear>[0];
+] as Parameters<typeof countReviewsBySentiment>[0];
 
-describe("countReviewsBySentimentThisYear", () => {
-	it("counts only reviews from the mocked current year, grouped by sentiment", () => {
-		const result = countReviewsBySentimentThisYear(fakeReviews);
+describe("countReviewsBySentiment", () => {
+	it("counts all reviews grouped by sentiment", () => {
+		const result = countReviewsBySentiment(fakeReviews);
 
-		expect(result).toHaveLength(2);
 		expect(result).toEqual([
 			{ sentiment: "happy", count: 2, fill: "var(--color-happy)" },
 			{ sentiment: "angry", count: 1, fill: "var(--color-angry)" },
+			{ sentiment: "sad", count: 1, fill: "var(--color-sad)" },
+			{ sentiment: "delighted", count: 1, fill: "var(--color-delighted)" },
 		]);
 	});
 
-	it("returns an empty array when no review matches the current year", () => {
-		const olderReviews = fakeReviews.filter(
-			(review) => !review.date.startsWith("2024"),
-		);
-
-		expect(countReviewsBySentimentThisYear(olderReviews)).toEqual([]);
-	});
-
 	it("returns an empty array for an empty input", () => {
-		expect(countReviewsBySentimentThisYear([])).toEqual([]);
+		expect(countReviewsBySentiment([])).toEqual([]);
 	});
 });

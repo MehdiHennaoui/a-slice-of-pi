@@ -32,7 +32,8 @@ export function DateRangePicker({
 			<PopoverTrigger asChild>
 				<Button
 					variant="outline"
-					className={cn("justify-start font-normal", className)}
+					size="lg"
+					className={cn("w-full justify-start font-normal", className)}
 				>
 					<CalendarIcon data-icon="inline-start" />
 					{label}

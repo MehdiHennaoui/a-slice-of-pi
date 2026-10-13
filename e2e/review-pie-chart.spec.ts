@@ -1,16 +1,22 @@
 import { expect, test } from "@playwright/test";
 
-import { countReviewsBySentimentThisYear } from "../src/pages/home/model/review/review";
+import { countReviewsBySentiment } from "../src/pages/home/model/review/review";
 import { reviewText } from "../src/pages/home/ui/review-pie-chart/review-text";
 import { CURRENT_YEAR } from "../src/shared/config";
+import { isDateWithinRange, yearDateRange } from "../src/shared/lib/date";
 import reviewDataFixture from "./fixtures/review-data.json" with {
 	type: "json",
 };
 import { expectSectionTitle, reviewChartTitle } from "./helpers/section-titles";
 
-type ReviewData = Parameters<typeof countReviewsBySentimentThisYear>[0];
+type ReviewData = Parameters<typeof countReviewsBySentiment>[0];
 const fixtureReviews = reviewDataFixture as ReviewData;
-const expectedSentiments = countReviewsBySentimentThisYear(fixtureReviews);
+const defaultRange = yearDateRange(CURRENT_YEAR);
+const expectedSentiments = countReviewsBySentiment(
+	fixtureReviews.filter((review) =>
+		isDateWithinRange(review.date, defaultRange.from, defaultRange.to),
+	),
+);
 const copy = reviewText["review-chart"];
 
 test.describe("review pie chart", () => {
@@ -32,16 +38,10 @@ test.describe("review pie chart", () => {
 		}
 	});
 
-	test("ignores fixture reviews outside the current year", async ({ page }) => {
+	test("hides fixture sentiments outside the default year range", async ({
+		page,
+	}) => {
 		await expectSectionTitle(page, reviewChartTitle());
-
-		expect(
-			countReviewsBySentimentThisYear(
-				fixtureReviews.filter(
-					(review) => !review.date.startsWith(String(CURRENT_YEAR)),
-				),
-			),
-		).toEqual([]);
 
 		await expect(
 			page.getByText(copy.legend.angry, { exact: true }),
