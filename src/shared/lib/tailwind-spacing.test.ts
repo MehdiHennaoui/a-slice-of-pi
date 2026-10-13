@@ -1,13 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
-
-const { MOCK_MAX_TAILWIND_SPACING_STEP } = vi.hoisted(() => ({
-	MOCK_MAX_TAILWIND_SPACING_STEP: 8,
-}));
-vi.mock("./tailwind-spacing-config", () => ({
-	MAX_TAILWIND_SPACING_STEP: MOCK_MAX_TAILWIND_SPACING_STEP,
-}));
-
-import { tailwindSpacingToPx } from "./tailwind-spacing";
+import {
+	MAX_TAILWIND_SPACING_STEP,
+	tailwindSpacingToPx,
+} from "./tailwind-spacing";
 
 describe("tailwindSpacingToPx", () => {
 	it("maps spacing steps with the default Tailwind formula", () => {
@@ -22,11 +17,11 @@ describe("tailwindSpacingToPx", () => {
 			.spyOn(console, "error")
 			.mockImplementation(() => {});
 
-		expect(tailwindSpacingToPx(MOCK_MAX_TAILWIND_SPACING_STEP + 10)).toBe(
-			MOCK_MAX_TAILWIND_SPACING_STEP * 4,
+		expect(tailwindSpacingToPx(MAX_TAILWIND_SPACING_STEP + 10)).toBe(
+			MAX_TAILWIND_SPACING_STEP * 4,
 		);
 		expect(consoleError).toHaveBeenCalledWith(
-			`Tailwind spacing step "${MOCK_MAX_TAILWIND_SPACING_STEP + 10}" exceeds maximum of ${MOCK_MAX_TAILWIND_SPACING_STEP}`,
+			`Tailwind spacing step "${MAX_TAILWIND_SPACING_STEP + 10}" exceeds maximum of ${MAX_TAILWIND_SPACING_STEP}`,
 		);
 
 		consoleError.mockRestore();

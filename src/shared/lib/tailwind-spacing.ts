@@ -1,6 +1,6 @@
+export const MAX_TAILWIND_SPACING_STEP = 24;
 const SPACING_UNIT_REM = 0.25;
 const ROOT_FONT_SIZE_PX = 16;
-const MAX_TAILWIND_SPACING_STEP = 24;
 
 export function tailwindSpacingToPx(step: number): number {
 	if (step > MAX_TAILWIND_SPACING_STEP) {
