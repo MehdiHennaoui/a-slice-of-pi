@@ -3,6 +3,7 @@ import { expect, test } from "@playwright/test";
 import type { OrderDataType } from "../src/pages/home/model/order/order";
 import { getRevenueByMonth } from "../src/pages/home/model/revenue/revenue-by-month";
 import { CURRENT_YEAR } from "../src/shared/config";
+import { isDateWithinRange, yearDateRange } from "../src/shared/lib/date";
 import orderDataFixture from "./fixtures/order-data.json" with { type: "json" };
 import {
 	expectSectionTitle,
@@ -10,7 +11,12 @@ import {
 } from "./helpers/section-titles";
 
 const fixtureOrders = orderDataFixture as OrderDataType[];
-const expectedRevenueByMonth = getRevenueByMonth(fixtureOrders);
+const defaultRange = yearDateRange(CURRENT_YEAR);
+const expectedRevenueByMonth = getRevenueByMonth(
+	fixtureOrders.filter((order) =>
+		isDateWithinRange(order.date, defaultRange.from, defaultRange.to),
+	),
+);
 
 test.describe("monthly revenue line chart", () => {
 	test.beforeEach(async ({ page }) => {
@@ -29,16 +35,10 @@ test.describe("monthly revenue line chart", () => {
 		}
 	});
 
-	test("ignores fixture orders outside the current year", async ({ page }) => {
+	test("hides fixture months outside the default year range", async ({
+		page,
+	}) => {
 		await expectSectionTitle(page, monthlyRevenueTitle());
-
-		expect(
-			getRevenueByMonth(
-				fixtureOrders.filter(
-					(order) => !order.date.startsWith(String(CURRENT_YEAR)),
-				),
-			),
-		).toEqual([]);
 
 		await expect(page.getByText("June", { exact: true })).toHaveCount(0);
 	});

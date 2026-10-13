@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { useDateRange } from "@/features/date-range";
 import { isDateWithinRange } from "@/shared/lib/date";
 
-import { countReviewsBySentimentThisYear, reviewData } from "./review";
+import { countReviewsBySentiment, reviewData } from "./review";
 
 export function useReviewsBySentiment() {
 	const { range } = useDateRange();
@@ -11,7 +11,7 @@ export function useReviewsBySentiment() {
 
 	return useMemo(
 		() =>
-			countReviewsBySentimentThisYear(
+			countReviewsBySentiment(
 				reviewData.filter((review) =>
 					isDateWithinRange(review.date, range.from, to),
 				),

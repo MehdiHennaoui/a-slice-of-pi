@@ -1,4 +1,3 @@
-import { isCurrentYear } from "@/shared/lib/is-current-year";
 import rawReviewData from "./review-data.json" with { type: "json" };
 
 type StoreType = "Kanata" | "Orleans" | "Downtown" | "Sandy Hill" | "The Glebe";
@@ -19,34 +18,21 @@ type ObjectSentimentCount = Record<
 >;
 
 export const reviewData = rawReviewData as ReviewData[];
-export const reviewsBySentimentThisYear =
-	countReviewsBySentimentThisYear(reviewData);
 
-export function countReviewsBySentimentThisYear(reviewData: ReviewData[]) {
+export function countReviewsBySentiment(reviewData: ReviewData[]) {
 	return Object.values(
-		reviewData.reduce(
-			accumulateCurrentYearSentimentCount,
-			{} as ObjectSentimentCount,
-		),
+		reviewData.reduce(accumulateSentimentCount, {} as ObjectSentimentCount),
 	);
 }
 
-function accumulateCurrentYearSentimentCount(
+function accumulateSentimentCount(
 	acc: ObjectSentimentCount,
 	review: ReviewData,
 ): ObjectSentimentCount {
-	if (isReviewNotInCurrentYear(review)) {
-		return acc;
-	}
-
 	acc[review.sentiment] = {
 		count: (acc[review.sentiment]?.count || 0) + 1,
 		fill: `var(--color-${review.sentiment})`,
 		sentiment: review.sentiment,
 	};
 	return acc;
-}
-
-function isReviewNotInCurrentYear(review: ReviewData) {
-	return !isCurrentYear(review.date);
 }
