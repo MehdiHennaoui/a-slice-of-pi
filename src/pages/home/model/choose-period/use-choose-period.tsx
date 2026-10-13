@@ -13,7 +13,9 @@ type ChoosePeriodContextValue = {
 	setRange: (range: ChoosePeriodValue) => void;
 };
 
-const ChoosePeriodContext = createContext<ChoosePeriodContextValue | null>(null);
+const ChoosePeriodContext = createContext<ChoosePeriodContextValue | null>(
+	null,
+);
 
 export function ChoosePeriodProvider({ children }: { children: ReactNode }) {
 	const [range, setRange] = useState<ChoosePeriodValue>(() =>
@@ -31,7 +33,9 @@ export function useChoosePeriod() {
 	const context = useContext(ChoosePeriodContext);
 
 	if (!context) {
-		throw new Error("useChoosePeriod must be used within a ChoosePeriodProvider");
+		throw new Error(
+			"useChoosePeriod must be used within a ChoosePeriodProvider",
+		);
 	}
 
 	return context;
