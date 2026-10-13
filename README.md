@@ -27,7 +27,7 @@ Pizza shop analytics dashboard built with React. It turns order, pricing, and re
 
 ## Prerequisites
 
-- Node.js 20+
+- Node.js 24+
 - [pnpm](https://pnpm.io/)
 
 ## Getting started
